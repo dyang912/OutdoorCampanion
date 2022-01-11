@@ -17,8 +17,23 @@ function App() {
     fetch_posts().then(value => {
         console.log(value)
     })
+    const posts = await fetch_posts();
 
-    var posts = fetch_posts();
+    const Feed = ({ posts }) => (
+        <div>
+        { Object.values(posts).map(post => <Post post={ post } />) }
+        </div>
+      );
+    
+    const Post = ({ post }) => (
+        <div>
+          { post.text } 
+        </div>
+      );
+    
+    
+
+    
 
     return (
     <div className="App">
@@ -47,7 +62,7 @@ function App() {
         <div>{divText}</div>
 
         <div>
-
+            <Feed/>
         </div>
     </div>
 
