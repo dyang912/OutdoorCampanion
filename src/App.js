@@ -2,6 +2,7 @@ import './App.css';
 import {useState} from 'react';
 import firebase from "./database/firebase";
 import {add_user, verify_user} from "./database/users";
+import {fetch_posts} from "./database/fetchposts.js";
 
 function App() {
     const [name , setName] = useState();
@@ -12,6 +13,12 @@ function App() {
 
     const [divText, setDivText] = useState("N/A");
     const changeText = (text) => setDivText(text);
+
+    fetch_posts().then(value => {
+        console.log(value)
+    })
+
+    var posts = fetch_posts();
 
     return (
     <div className="App">
@@ -38,7 +45,13 @@ function App() {
             })
         }}>login</button>
         <div>{divText}</div>
+
+        <div>
+
+        </div>
     </div>
+
+
     );
 }
 
