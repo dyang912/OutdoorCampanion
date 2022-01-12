@@ -7,8 +7,10 @@ function getRandomInt() {
 }
 
 export function make_post(writtentext) {
-    set(ref(db, 'posts/' + getRandomInt()), {
+    const postkey = getRandomInt()
+    set(ref(db, 'posts/' + postkey), {
         text: writtentext,
         time: Date.now(),
+        postkey: postkey,
     });
 }

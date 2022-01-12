@@ -11,9 +11,9 @@ function App() {
     const [UID, setUID] = useState("your email: NULL");
     const changeText = (text) => setUID(text);
 
-    const [posts, setPost] = useState()
+    const [posts, setPost] = useState("")
 
-    const [posttext, makePost] = useState();
+    const [posttext, makePost] = useState("");
 
     fetch_posts().then(value => {
         setPost(value)
@@ -21,7 +21,7 @@ function App() {
 
     const Feed = ({ posts }) => (
         <div>
-            { posts ? Object.values(posts).map(post => <Post post={ post } />) : null }
+            { posts ? Object.values(posts).map(post => <Post key={post.postkey} post={ post } />) : null }
         </div>
       );
 
