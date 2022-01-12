@@ -3,6 +3,7 @@ import {useState} from 'react';
 import firebase from "./database/firebase";
 import {add_user, verify_user} from "./database/users";
 import {fetch_posts} from "./database/fetchposts.js";
+import {make_post} from "./database/createpost.js";
 
 function App() {
     const [name , setName] = useState();
@@ -16,6 +17,8 @@ function App() {
 
     const [posts, setPost] = useState()
 
+    const [posttext, makePost] = useState();
+
     fetch_posts().then(value => {
         setPost(value)
     })
@@ -25,10 +28,10 @@ function App() {
             { posts ? Object.values(posts).map(post => <Post post={ post } />) : null }
         </div>
       );
-    
+
     const Post = ({ post }) => (
         <div>
-          { post.text } 
+          { post.text }
         </div>
       );
 
@@ -61,6 +64,14 @@ function App() {
 
         <div>
             <Feed posts={posts}/>
+        </div>
+        <div>
+
+          <input placeholder="Make a post" value={posttext}
+               onChange={(e) => makePost(e.target.value)} />
+          <br></br>
+          <button onClick={() => make_post(posttext)}>post</button>
+
         </div>
     </div>
 
