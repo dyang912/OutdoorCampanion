@@ -1,22 +1,25 @@
-import { getDatabase, ref, child, set, get } from "firebase/database";
+import {getAuth, GoogleAuthProvider, onIdTokenChanged, signInWithPopup, signOut} from 'firebase/auth';
+import {firebase} from './firebase'
+import {useState, useEffect} from "react";
 
-const db = getDatabase();
-
-export function add_user(uName, uPassword) {
-    set(ref(db, 'users/' + uName), {
-        password: uPassword,
-    });
-}
-
-export async function verify_user(uName, uPassword) {
-    return await get(child(ref(db), `users/${uName}`)).then((snapshot) => {
-        if (snapshot.exists()) {
-            return snapshot.val().password === uPassword
-        } else {
-            return false
+export const signInWithGoogle = async () => {
+    return await signInWithPopup(getAuth(firebase), new GoogleAuthProvider()).then(
+        (result) => {
+            return result.user.email;
         }
-    }).catch((error) => {
-        console.error(error);
-    });
-}
+    )
+};
 
+const firebaseSignOut = () => signOut(getAuth(firebase));
+
+export { firebaseSignOut as signOut };
+
+export const useUserState = () => {
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        onIdTokenChanged(getAuth(firebase), setUser);
+    }, []);
+
+    return [user];
+};
