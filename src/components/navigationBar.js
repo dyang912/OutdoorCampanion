@@ -1,19 +1,26 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function NavigationBar() {
     return (
-        <ul>
-            <li>
-                <Link to={"/"}> Community </Link>
+        <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
+        <ul className = "navbar-nav">
+        
+            <li className = "nav-item">
+                <Link to={"/"} className= "nav-link"> Community </Link>
             </li>
-            <li>
-                <Link to={"/login"}> Login </Link>
+            <li className = "nav-item">
+                <Link to={"/newpost"} className= "nav-link"> Post Event </Link>
             </li>
-            <li>
-                <Link to={"/newpost"}> Post Event </Link>
+            <li className = "nav-item">
+                <Link to={"/login"} className= "nav-link"> Login </Link>
             </li>
+        4
         </ul>
+
+        </nav>
     );
 }
 

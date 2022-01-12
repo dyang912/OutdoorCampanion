@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import NewPost from "./pages/NewPost";
 import NavigationBar from "./components/navigationBar";
 import ErrorPage from "./pages/Error";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     const [user] = useUserState();
@@ -28,9 +29,13 @@ function App() {
         })
     }, []);
 
+
     return (
         <BrowserRouter>
-            <NavigationBar />
+            <div className="page-header">
+                <h1>Outdoor Companion</h1> 
+                
+            </div>
             <Routes>
                 <Route path="/" element={<Community posts={posts}/>} />
                 <Route path="/login" element={<Login user={user} UID={UID} UName={UName}
@@ -39,6 +44,8 @@ function App() {
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
+            <NavigationBar />
+            
         </BrowserRouter>
     );
 }

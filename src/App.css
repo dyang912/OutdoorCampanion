@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+.feed {
+  margin: 1%;
+  margin-bottom: 6%
+}
+
+.page-header{
+  text-align: center;
+  background-color: #1e4021;
+  padding: 1%;
+  color: #a3947e;
+  
+}
+
+.new-post-form{
+  margin: 5%;
+}
+
+.btn{
+  text-align: center;
+}
+
+
+
+
+
