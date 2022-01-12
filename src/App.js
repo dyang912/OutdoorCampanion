@@ -14,14 +14,15 @@ function App() {
     const [divText, setDivText] = useState("N/A");
     const changeText = (text) => setDivText(text);
 
+    const [posts, setPost] = useState()
+
     fetch_posts().then(value => {
-        console.log(value)
+        setPost(value)
     })
-    const posts = await fetch_posts();
 
     const Feed = ({ posts }) => (
         <div>
-        { Object.values(posts).map(post => <Post post={ post } />) }
+            { posts ? Object.values(posts).map(post => <Post post={ post } />) : null }
         </div>
       );
     
@@ -30,10 +31,7 @@ function App() {
           { post.text } 
         </div>
       );
-    
-    
 
-    
 
     return (
     <div className="App">
@@ -62,7 +60,7 @@ function App() {
         <div>{divText}</div>
 
         <div>
-            <Feed/>
+            <Feed posts={posts}/>
         </div>
     </div>
 
