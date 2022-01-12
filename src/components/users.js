@@ -1,16 +1,18 @@
 import {signInWithGoogle, signOut} from "../database/users";
 
-export const SignInButton = ({ changeText }) => (
+export const SignInButton = ({ setUID, setUName }) => (
     <button onClick={ () => {
-        signInWithGoogle().then(value => {
-            changeText(`your email: ${value}`)
+        signInWithGoogle().then(([email, name]) => {
+            setUID(email);
+            setUName(name);
         })
     }} >login</button>
 )
 
-export const SignOutButton = ({ changeText }) => (
+export const SignOutButton = ({ setUID, setUName }) => (
     <button onClick={ () => {
         signOut();
-        changeText("your email: NULL");
+        setUID("");
+        setUName("");
     }}>logout</button>
 )
