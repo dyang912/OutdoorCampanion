@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function NavigationBar() {
     return (
-        <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
         <ul className = "navbar-nav">
         
             <li className = "nav-item">

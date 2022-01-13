@@ -17,6 +17,7 @@ function App() {
     const [user] = useUserState();
     const [UID, setUID] = useState("");
     const [UName, setUName] = useState("");
+    const [UPhotoUrl, setUPhotoUrl] = useState("");
 
     const [posts, setPost] = useState("")
 
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/" element={<Community posts={posts}/>} />
                 <Route path="/login" element={<Login user={user} UID={UID} UName={UName}
                                                      setUID={setUID} setUName={setUName}
+                                                     UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />

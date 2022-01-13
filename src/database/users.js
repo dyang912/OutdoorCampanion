@@ -5,7 +5,7 @@ import {useState, useEffect} from "react";
 export const signInWithGoogle = async () => {
     return await signInWithPopup(getAuth(firebase), new GoogleAuthProvider()).then(
         (result) => {
-            return [result.user.email, result.user.displayName];
+            return [result.user.email, result.user.displayName, result.user.photoURL];
         }
     )
 };
