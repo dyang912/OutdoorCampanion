@@ -6,6 +6,7 @@ import {useUserState} from "./database/users";
 import {onValue, getDatabase, ref} from "firebase/database"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
+
 import Community from "./pages/Community";
 import Login from "./pages/Login";
 import NewPost from "./pages/NewPost";
@@ -20,7 +21,8 @@ function App() {
     const [UName, setUName] = useState("");
     const [UPhotoUrl, setUPhotoUrl] = useState("");
 
-    const [posts, setPost] = useState("")
+    const [posts, setPost] = useState("");
+
 
     useEffect(() => {
         const db = ref(getDatabase(firebase), "/posts");
