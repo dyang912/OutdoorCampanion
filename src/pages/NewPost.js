@@ -6,7 +6,7 @@ import {make_post} from "../database/createpost";
 
 function NewPost({user, UName}) {
     const [posttext, makePost] = useState("");
-    const [now, setOption] = useState("camping");
+    const [now, setOption] = useState("miscellaneous");
     const navigate = useNavigate();
 
     const options = [
