@@ -1,7 +1,6 @@
-import React from "react";
+import React from "react"; 
 
-const Feed = ({ posts }) => (
-    
+const Feed = ({ posts }) => ( 
     <div className="feed">
         { posts ? Object.values(posts).map(post => <Post key={post.postkey} post={ post } />) : null }
     </div>

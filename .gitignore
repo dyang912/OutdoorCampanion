@@ -10,6 +10,8 @@
 
 .idea
 
+.firebase
+
 # production
 /build
 
