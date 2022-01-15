@@ -53,7 +53,7 @@ function NewPost({user, UName}) {
 
                 <div class="d-grid gap-3 col-3 mx-auto p-2">
                     <button type="button" class="btn btn-outline-dark" onClick={() => {
-                        user ? make_post(posttext, UName, now) : navigate('/login')();
+                        user ? make_post(posttext, UName, now, navigate) : navigate('/login')();
                     }}>post</button>
                 </div> 
                 
