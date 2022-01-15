@@ -27,6 +27,7 @@ function Community({ posts }) {
     }
 
     return (
+
         <div>
             <Dropdown onSelect={handleSelect} className="m-3">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
