@@ -2,41 +2,27 @@ import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 
 import {make_post} from "../database/createpost";
-import 'firebase/storage';
-
-
 
 
 function NewPost({user, UName}) {
     const [posttext, makePost] = useState("");
     const [now, setOption] = useState("camping");
-    const [imageAsFile, setImageAsFile] = useState('');
-    const [imageAsUrl, setImageAsUrl] = useState('');
     const navigate = useNavigate();
-
-    const handleImageAsFile = (e) => {
-        const image = e.target.files[0]
-        setImageAsFile(imageFile => (image))
-    }
 
     const options = [
         {
-
             label: "Event",
             value: "event",
         },
         {
-
             label: "Question",
             value: "question",
         },
         {
-
             label: "Promotion",
             value: "promotion",
         },
         {
-
             label: "Miscellaneous",
             value: "miscellaneous",
         },
@@ -64,8 +50,6 @@ function NewPost({user, UName}) {
                           ))}
                     </select>
                 </div>
-                <label class="form-label" for="customFile">Default file input example</label>
-                <input type="file" class="form-control" accept=".jpg,.png,.jpeg" id="customFile" onChange={handleImageAsFile}/>
 
                 <div class="d-grid gap-3 col-3 mx-auto p-2">
                     <button type="button" class="btn btn-outline-dark" onClick={() => {
