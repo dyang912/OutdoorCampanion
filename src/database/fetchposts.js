@@ -1,9 +1,9 @@
-import { getDatabase, ref, child,get, orderByChild, limitToLast } from "firebase/database";
+import { getDatabase, ref, child,get, orderByChild } from "firebase/database";
 
 const db = getDatabase();
 
 export async function fetch_posts() {
-    return await get(child(ref(db), `posts`, orderByChild('time'), limitToLast(3))).then((snapshot) => {
+    return await get(child(ref(db), `posts`, orderByChild('time'))).then((snapshot) => {
         const postarray = [];
         snapshot.forEach(function(child) {
             postarray.push(child.val());
