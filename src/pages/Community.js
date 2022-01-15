@@ -1,8 +1,11 @@
-import React from "react"; 
+import React, {useState} from "react";
+import Dropdown from "react-bootstrap/Dropdown";
 
-const Feed = ({ posts }) => ( 
+const Feed = ({ posts, category }) => (
     <div className="feed">
-        { posts ? Object.values(posts).map(post => <Post key={post.postkey} post={ post } />) : null }
+        { posts ? Object.values(posts).filter(post => category === "" || post.category === category).map( post =>
+            <Post key={post.postkey} post={ post } />) : null
+        }
     </div>
 );
 
@@ -17,11 +20,29 @@ const Post = ({ post }) => (
 
 
 function Community({ posts }) {
+    const [category, setCategory] = useState("")
+
+    const handleSelect=(e)=>{
+        setCategory(e)
+    }
+
     return (
         <div>
-            {/* <h1>Community</h1> */}
+            <Dropdown onSelect={handleSelect} className="m-3">
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Filter
+                </Dropdown.Toggle>
 
-            <Feed posts={posts}/>
+                <Dropdown.Menu>
+                    <Dropdown.Item eventKey="">All</Dropdown.Item>
+                    <Dropdown.Item eventKey="camping">Camping</Dropdown.Item>
+                    <Dropdown.Item eventKey="hiking">Hiking</Dropdown.Item>
+                    <Dropdown.Item eventKey="biking">Biking</Dropdown.Item>
+                    <Dropdown.Item eventKey="swimming">Swimming</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+
+            <Feed posts={posts} category={category}/>
         </div>
     );
 }
