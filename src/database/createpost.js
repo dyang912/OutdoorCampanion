@@ -24,3 +24,12 @@ export function make_post(writtentext, userName, category, navigate) {
         // alert("error!")
     });
 }
+
+export function add_post_comment(post, commentTxt) {
+    post.comment = post.comment === null ? [commentTxt] : [commentTxt, ...post.comment]
+    set(ref(db, 'posts/' + post.postkey), post).then(() => {
+        alert("comment success!")
+    }).catch((error) => {
+        console.log(error);
+    });
+}
