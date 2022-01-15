@@ -12,6 +12,7 @@ import NewPost from "./pages/NewPost";
 import NavigationBar from "./components/navigationBar";
 import ErrorPage from "./pages/Error";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 function App() {
     const [user] = useUserState();
@@ -30,15 +31,14 @@ function App() {
         })
     }, []);
 
-
     return (
         <BrowserRouter>
             <div className="page-header">
-                <h1>Outdoor Companion</h1> 
-                
+                <h1>Outdoor Companion</h1>
             </div>
+
             <Routes>
-                <Route path="/" element={<Community posts={posts}/>} />
+                <Route path="/" element={<Community posts={posts} />} />
                 <Route path="/login" element={<Login user={user} UID={UID} UName={UName}
                                                      setUID={setUID} setUName={setUName}
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
