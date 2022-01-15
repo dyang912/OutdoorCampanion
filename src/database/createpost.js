@@ -7,6 +7,7 @@ function getRandomInt() {
 }
 
 export function make_post(writtentext, userName) {
+    
     const postkey = getRandomInt()
     set(ref(db, 'posts/' + postkey), {
         text: writtentext,

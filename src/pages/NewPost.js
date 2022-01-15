@@ -1,9 +1,12 @@
 import React, {useState} from "react";
+import { useNavigate } from 'react-router-dom';
+
 import {make_post} from "../database/createpost";
+
 
 function NewPost({user, UName}) {
     const [posttext, makePost] = useState("");
-
+    const navigate = useNavigate();
     return (
         <div>
             <form className = "new-post-form">
@@ -23,7 +26,7 @@ function NewPost({user, UName}) {
                   </div> 
                 <div class="d-grid gap-3 col-3 mx-auto p-2">
                     <button type="button" class="btn btn-outline-dark" onClick={() => {
-                        user ? make_post(posttext, UName) : alert("please login");
+                        user ? make_post(posttext, UName) : navigate('/login')() ;
                     }}>post</button>
                 </div> 
                 
