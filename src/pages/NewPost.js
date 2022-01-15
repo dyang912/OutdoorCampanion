@@ -21,20 +21,24 @@ function NewPost({user, UName}) {
 
     const options = [
         {
-            label: "Camping",
-            value: "camping",
+
+            label: "Event",
+            value: "event",
         },
         {
-            label: "Hiking",
-            value: "hiking",
+
+            label: "Question",
+            value: "question",
         },
         {
-            label: "Biking",
-            value: "biking",
+
+            label: "Promotion",
+            value: "promotion",
         },
         {
-            label: "Swimming",
-            value: "swimming",
+
+            label: "Miscellaneous",
+            value: "miscellaneous",
         },
     ];
 
@@ -67,8 +71,8 @@ function NewPost({user, UName}) {
                     <button type="button" class="btn btn-outline-dark" onClick={() => {
                         user ? make_post(posttext, UName, now, navigate) : navigate('/login')();
                     }}>post</button>
-                </div> 
-                
+                </div>
+
             </form>
         </div>
     );
