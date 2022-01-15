@@ -8,13 +8,14 @@ function getRandomInt() {
   return Math.floor(Math.random() * 1728354123897);
 }
 
-export function make_post(writtentext, userName) {
+export function make_post(writtentext, userName, category) {
     const postkey = getRandomInt()
     set(ref(db, 'posts/' + postkey), {
         text: writtentext,
         time: Date.now(),
         postkey: postkey,
         creator: userName,
+        category: category,
     }).then(() => {
         alert("post success!")
     }).catch((error) => {
