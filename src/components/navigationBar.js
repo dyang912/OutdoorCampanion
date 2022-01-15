@@ -9,7 +9,7 @@ function NavigationBar() {
         <ul className = "navbar-nav">
         
             <li className = "nav-item">
-                <Link to={"/"} className= "nav-link"> Community </Link>
+                <Link to={"/"} exact={true} className= "nav-link"> Community </Link>
             </li>
             <li className = "nav-item">
                 <Link to={"/newpost"} className= "nav-link"> Post Event </Link>
