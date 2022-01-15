@@ -11,20 +11,20 @@ function NewPost({user, UName}) {
 
     const options = [
         {
-            label: "Camping",
-            value: "camping",
+            label: "Event",
+            value: "event",
         },
         {
-            label: "Hiking",
-            value: "hiking",
+            label: "Question",
+            value: "question",
         },
         {
-            label: "Biking",
-            value: "biking",
+            label: "Promotion",
+            value: "promotion",
         },
         {
-            label: "Swimming",
-            value: "swimming",
+            label: "Miscellaneous",
+            value: "miscellaneous",
         },
     ];
 
