@@ -72,6 +72,7 @@ export function make_post(writtentext, userName, category, navigate, file) {
         postkey: postkey,
         creator: userName,
         category: category,
+        image: downloadURL,
     }).then(() => {
         alert("post success!")
         navigate('/')()
