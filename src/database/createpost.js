@@ -8,8 +8,29 @@ function getRandomInt() {
   return Math.floor(Math.random() * 1728354123897);
 }
 
-export function make_post(writtentext, userName, category, navigate, file) {
-    const postkey = getRandomInt()
+function finishPosting(writtentext, userName, category, navigate,url){
+  const postkey = getRandomInt();
+  set(ref(db, 'posts/' + postkey), {
+      text: writtentext,
+      time: Date.now(),
+      postkey: postkey,
+      creator: userName,
+      category: category,
+      image: url,
+  }).then(() => {
+      alert("post success!")
+      navigate('/')()
+  }).catch((error) => {
+      console.log(error);
+      // alert("error!")
+  });
+
+
+}
+
+async function make_post(writtentext, userName, category, navigate, file) {
+
+
 
 
 
@@ -60,26 +81,17 @@ export function make_post(writtentext, userName, category, navigate, file) {
       },
       () => {
         // Upload completed successfully, now we can get the download URL
-        let url;
+
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at', downloadURL);
-          url = downloadURL;
+          finishPosting(writtentext, userName, category, navigate, downloadURL);
         });
       }
     );
 
-    set(ref(db, 'posts/' + postkey), {
-        text: writtentext,
-        time: Date.now(),
-        postkey: postkey,
-        creator: userName,
-        category: category,
-        image: downloadURL,
-    }).then(() => {
-        alert("post success!")
-        navigate('/')()
-    }).catch((error) => {
-        console.log(error);
-        // alert("error!")
-    });
+
+
+
 }
+
+export { make_post };

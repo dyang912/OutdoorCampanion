@@ -14,7 +14,7 @@ const Post = ({ post }) => (
     <div className="card m-2">
         <div className="card-body">
             <div className="card-text">{ post.creator + ":" + post.text  }</div>
-             <img src="post.image" alt="postImage"/> 
+             <img src = { post.image } alt="postImage"/> 
             <div className="card-text">{new Date(post.time).toLocaleString()}</div>
         </div>
     </div>
