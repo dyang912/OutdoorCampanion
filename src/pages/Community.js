@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 
+
 const Feed = ({ posts, category }) => (
     <div className="feed">
         { posts ? Object.values(posts).filter(post => category === "" || post.category === category).map( post =>
@@ -13,6 +14,7 @@ const Post = ({ post }) => (
     <div className="card m-2">
         <div className="card-body">
             <div className="card-text">{ post.creator + ":" + post.text  }</div>
+             <img src = { post.image } alt="postImage"/> 
             <div className="card-text">{new Date(post.time).toLocaleString()}</div>
         </div>
     </div>
