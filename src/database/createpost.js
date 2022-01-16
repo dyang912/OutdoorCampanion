@@ -60,8 +60,10 @@ export function make_post(writtentext, userName, category, navigate, file) {
       },
       () => {
         // Upload completed successfully, now we can get the download URL
+        let url;
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at', downloadURL);
+          url = downloadURL;
         });
       }
     );
