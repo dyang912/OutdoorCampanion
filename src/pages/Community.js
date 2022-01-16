@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 
+
 const Feed = ({ posts, category }) => (
     <div className="feed">
         { posts ? Object.values(posts).filter(post => category === "" || post.category === category).map( post =>

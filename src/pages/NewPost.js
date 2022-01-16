@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import {make_post} from "../database/createpost";
 
 
+
 function NewPost({user, UName}) {
     const [posttext, makePost] = useState("");
-    const [now, setOption] = useState("miscellaneous");
+    const [now, setOption] = useState("event");
     const navigate = useNavigate();
 
     const options = [
@@ -52,11 +53,11 @@ function NewPost({user, UName}) {
                     </select>
                 </div>
                 <input
-                   class="form-control" type="file"
+                   className="form-control" name="files[] " id="files " type="file"
                 />
                 <div class="d-grid gap-3 col-3 mx-auto p-2">
                     <button type="button" class="btn btn-outline-dark" onClick={() => {
-                        user ? make_post(posttext, UName, now, navigate) : navigate('/login')();
+                        user ? make_post(posttext, UName, now, navigate, document.getElementById("files ").files[0]) : navigate('/login')();
                     }}>post</button>
                 </div>
 
