@@ -25,9 +25,15 @@ export function make_post(writtentext, userName, category, navigate) {
     });
 }
 
+// a new section under each post for all the comments on each post
+// i tested this and it works possibly even better because less indexing
 export function add_post_comment(post, commentTxt) {
-    post.comment = post.comment === null ? [commentTxt] : [commentTxt, ...post.comment]
-    set(ref(db, 'posts/' + post.postkey), post).then(() => {
+    const postKey = getRandomInt();
+    //post.comment = post.comment === null ? [commentTxt] : [commentTxt, ...post.comment]
+    set(ref(db, 'posts/' + post.postkey + '/comments/' + postKey), {
+      text: commentTxt,
+      postkey: postKey,
+    }).then(() => {
         alert("comment success!")
     }).catch((error) => {
         console.log(error);

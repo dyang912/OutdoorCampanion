@@ -1,6 +1,10 @@
 import React, {useState} from "react";
 import {Dropdown, Card} from "react-bootstrap";
 import {add_post_comment} from "../database/createpost";
+import {firebase} from "./database/firebase";
+import {fetch_posts} from "./database/fetchposts.js";
+import {onValue, getDatabase, ref} from "firebase/database"
+//imported firebase to get all comments per each post
 
 const Feed = ({ posts, category }) => {
     return (
@@ -10,6 +14,25 @@ const Feed = ({ posts, category }) => {
             }
         </div>
     );
+}
+// a copy of Feed because I imagine a feed under eadh post of comments
+const Comments = ({ com }) => {
+    return (
+        <div className="feed">
+            { com.map(comment =>
+              <CommentText key={comment.postkey} comment={comment}  />
+            )}
+        </div>
+    );
+}
+
+// cards under each post of all previously posted comments like post in the feed
+const CommentText = ({comment}) => {
+  return (
+    <Card.Body>
+      <Card.Title>{ comment.text }</Card.Title>
+    </Card.Body>
+  )
 }
 
 const handleSubmit = (txt, post) => {
@@ -24,7 +47,7 @@ const Comment = ({post}) => {
       handleSubmit(txt, post);
       setTxt("");
     }
-    
+
     return (
         <form onSubmit={pressSubmit}>
             <textarea onChange={(e) => {
@@ -34,9 +57,18 @@ const Comment = ({post}) => {
         </form>
     );
 }
-
+// I am trying to get all of the comments and upload them into the comments section similar to feed under each post
+// this allows us to get only each posts individual comments 
 const Post = ({ post, handleClick }) => {
-    const [selected, setSelected] = useState(false)
+    const [selected, setSelected] = useState(false);
+
+    let comments;
+    const db = ref(getDatabase(firebase), "/posts"+ post.postkey + '/comments/');
+    onValue(db, () => {
+        fetch_posts().then(value => {
+            comments = value
+        })
+    })
 
     return (
         <Card className="m-2" onClick={() => {
@@ -45,6 +77,8 @@ const Post = ({ post, handleClick }) => {
         }}>
             <Card.Body>
                 <Card.Title>{ post.text }</Card.Title>
+
+                <Comments> com={comments}</Comments>
                 <Card.Text>{post.creator + " " + new Date(post.time).toLocaleString()}</Card.Text>
             </Card.Body>
             {selected ? <Comment post={post}/>: null}
