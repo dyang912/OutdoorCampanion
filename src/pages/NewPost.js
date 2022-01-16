@@ -45,6 +45,7 @@ function NewPost({user, UName}) {
                               setOption(e.target.value);
                           }}
                     >
+                        <option value="" disabled selected>Select your category</option>
                           {options.map((option) => (
                               <option value={option.value}>{option.label}</option>
                           ))}
