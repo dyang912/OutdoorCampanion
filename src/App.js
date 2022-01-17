@@ -1,11 +1,10 @@
 import './App.css';
 import {useEffect, useState} from 'react';
 import {firebase} from "./database/firebase";
-import {fetch_posts} from "./database/fetchposts.js";
+import {fetch_posts} from "./database/posts.js";
 import {useUserState} from "./database/users";
 import {onValue, getDatabase, ref} from "firebase/database"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-
 
 import Community from "./pages/Community";
 import Login from "./pages/Login";
@@ -13,16 +12,13 @@ import NewPost from "./pages/NewPost";
 import NavigationBar from "./components/navigationBar";
 import ErrorPage from "./pages/Error";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Dropdown from 'react-bootstrap/Dropdown'
 
 function App() {
     const [user] = useUserState();
     const [UID, setUID] = useState("");
     const [UName, setUName] = useState("");
     const [UPhotoUrl, setUPhotoUrl] = useState("");
-
-    const [posts, setPost] = useState("");
-
+    const [posts, setPost] = useState();
 
     useEffect(() => {
         const db = ref(getDatabase(firebase), "/posts");

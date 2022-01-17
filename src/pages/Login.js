@@ -9,7 +9,7 @@ function Login({ user, UID, setUID, UName, setUName, UPhotoUrl, setUPhotoUrl}) {
                       <SignInButton setUID={setUID} setUName={setUName} setUPhotoUrl = {setUPhotoUrl}/> }
             <div className="row">
                 <div className="col" id ="profile-photo-container">
-                    {user?  <img className = "profile-photo" src={UPhotoUrl} alt="UserPhoto"></img> : null}
+                    {user?  <img className = "profile-photo" src={UPhotoUrl} alt="UserPhoto"/> : null}
                 </div>
                 <div className="col">
                     {user? <div>Your Name: {UName ? UName : "NULL"}</div> : null}

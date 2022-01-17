@@ -1,9 +1,6 @@
 import React, {useState} from "react";
-import { useNavigate } from 'react-router-dom';
-
-import {make_post} from "../database/createpost";
-
-
+import {useNavigate} from 'react-router-dom';
+import {make_post} from "../database/posts";
 
 function NewPost({user, UName}) {
     const [posttext, makePost] = useState("");
@@ -33,31 +30,32 @@ function NewPost({user, UName}) {
         <div>
             <form className = "new-post-form">
                 <div className = "new-post mb-3">
-                    <label for="formtext" class="form-label">What's on your mind?</label>
-                    <input class="form-control" id="formtext" placeholder="Create a post" value={posttext}
+                    <label htmlFor="formtext" className="form-label">What's on your mind?</label>
+                    <input className="form-control" id="formtext" placeholder="Create a post" value={posttext}
                     onChange={(e) => makePost(e.target.value)} />
                 </div>
 
                 <div className = "post-category mb-3">
-                    <label for="formcategory" class="form-label">Category</label>
-                    <select class="form-select" aria-label="Default select example"
+                    <label htmlFor="formcategory" className="form-label">Category</label>
+                    <select className="form-select" aria-label="Default select example" defaultValue="event"
                           onChange={(e) => {
-                              console.log(e.target.value);
                               setOption(e.target.value);
                           }}
                     >
-                        <option value="" disabled selected>Select your category</option>
-                          {options.map((option) => (
-                              <option value={option.value}>{option.label}</option>
-                          ))}
+                        <option>Select your category</option>
+                        {options.map((option) => (
+                            <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
                     </select>
                 </div>
+
                 <input
                    className="form-control" name="files[] " id="files " type="file"
                 />
-                <div class="d-grid gap-3 col-3 mx-auto p-2">
-                    <button type="button" class="btn btn-outline-dark" onClick={() => {
-                        user ? make_post(posttext, UName, now, navigate, document.getElementById("files ").files[0]) : navigate('/login')();
+                <div className="d-grid gap-3 col-3 mx-auto p-2">
+                    <button type="button" className="btn btn-outline-dark" onClick={() => {
+                        user ? make_post(posttext, UName, now, navigate, document.getElementById("files ").files[0]) :
+                               alert("please login!"); navigate('/login');
                     }}>post</button>
                 </div>
 
