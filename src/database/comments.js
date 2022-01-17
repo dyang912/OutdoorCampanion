@@ -1,7 +1,6 @@
-import {child, get, getDatabase, onValue, orderByChild, ref, set} from "firebase/database";
-import {db, firebase} from "./firebase";
+import {get, ref, set} from "firebase/database";
+import {db} from "./firebase";
 import {getRandomInt} from "./utils";
-
 
 export function add_post_comment(postKey, commentTxt) {
     const commentKey = getRandomInt();

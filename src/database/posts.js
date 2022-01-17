@@ -14,10 +14,9 @@ function finishPosting(writtentext, userName, category, navigate,url){
       image: url,
   }).then(() => {
       alert("post success!")
-      navigate('/')()
+      navigate('/')
   }).catch((error) => {
       console.log(error);
-      // alert("error!")
   });
 }
 

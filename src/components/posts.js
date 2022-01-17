@@ -22,8 +22,10 @@ const Post = ({ post, handleClick }) => {
         >
             <Card.Body>
                 <Card.Title>{ post.text }</Card.Title>
-                { post.image? <img src = { post.image } alt="postImage"/> : null }
-                <Card.Text>{post.creator + " " + new Date(post.time).toLocaleString()}</Card.Text>
+                { post.image? <Card.Img style={{width:"50%"}} src = { post.image } alt="postImage"/> : null }
+                <Card.Text>
+                    <small className="text-muted">{ post.creator + " " + new Date(post.time).toLocaleString() }</small>
+                </Card.Text>
             </Card.Body>
             {selected ? <Comments postKey={post.postKey}/>: null}
         </Card>
