@@ -1,5 +1,6 @@
 import {initializeApp} from 'firebase/app';
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyAPfFUJgGFdt8GN8-Su-1s8s7w7uwDPy9A",
     authDomain: "outdoor-companion-cs394.firebaseapp.com",

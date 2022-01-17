@@ -4,27 +4,28 @@ import { useNavigate } from 'react-router-dom';
 import {make_post} from "../database/createpost";
 
 
+
 function NewPost({user, UName}) {
     const [posttext, makePost] = useState("");
-    const [now, setOption] = useState("camping");
+    const [now, setOption] = useState("event");
     const navigate = useNavigate();
 
     const options = [
         {
-            label: "Camping",
-            value: "camping",
+            label: "Event",
+            value: "event",
         },
         {
-            label: "Hiking",
-            value: "hiking",
+            label: "Question",
+            value: "question",
         },
         {
-            label: "Biking",
-            value: "biking",
+            label: "Promotion",
+            value: "promotion",
         },
         {
-            label: "Swimming",
-            value: "swimming",
+            label: "Miscellaneous",
+            value: "miscellaneous",
         },
     ];
 
@@ -45,18 +46,21 @@ function NewPost({user, UName}) {
                               setOption(e.target.value);
                           }}
                     >
+                        <option value="" disabled selected>Select your category</option>
                           {options.map((option) => (
                               <option value={option.value}>{option.label}</option>
                           ))}
                     </select>
                 </div>
-
+                <input
+                   className="form-control" name="files[] " id="files " type="file"
+                />
                 <div class="d-grid gap-3 col-3 mx-auto p-2">
                     <button type="button" class="btn btn-outline-dark" onClick={() => {
-                        user ? make_post(posttext, UName, now, navigate) : navigate('/login')();
+                        user ? make_post(posttext, UName, now, navigate, document.getElementById("files ").files[0]) : navigate('/login')();
                     }}>post</button>
-                </div> 
-                
+                </div>
+
             </form>
         </div>
     );

@@ -6,6 +6,7 @@ import {fetch_posts} from "./database/fetchposts.js";
 import {onValue, getDatabase, ref} from "firebase/database"
 //imported firebase to get all comments per each post
 
+
 const Feed = ({ posts, category }) => {
     return (
         <div className="feed">
@@ -15,6 +16,7 @@ const Feed = ({ posts, category }) => {
         </div>
     );
 }
+
 // a copy of Feed because I imagine a feed under eadh post of comments
 const Comments = ({ com }) => {
     return (
@@ -58,7 +60,7 @@ const Comment = ({post}) => {
     );
 }
 // I am trying to get all of the comments and upload them into the comments section similar to feed under each post
-// this allows us to get only each posts individual comments 
+// this allows us to get only each posts individual comments
 const Post = ({ post, handleClick }) => {
     const [selected, setSelected] = useState(false);
 
@@ -95,6 +97,7 @@ function Community({ posts }) {
     }
 
     return (
+
         <div>
             <Dropdown onSelect={handleSelect} className="m-3">
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -103,10 +106,10 @@ function Community({ posts }) {
 
                 <Dropdown.Menu>
                     <Dropdown.Item eventKey="">All</Dropdown.Item>
-                    <Dropdown.Item eventKey="camping">Camping</Dropdown.Item>
-                    <Dropdown.Item eventKey="hiking">Hiking</Dropdown.Item>
-                    <Dropdown.Item eventKey="biking">Biking</Dropdown.Item>
-                    <Dropdown.Item eventKey="swimming">Swimming</Dropdown.Item>
+                    <Dropdown.Item eventKey="event">Event</Dropdown.Item>
+                    <Dropdown.Item eventKey="question">Question</Dropdown.Item>
+                    <Dropdown.Item eventKey="promotion">Promotion</Dropdown.Item>
+                    <Dropdown.Item eventKey="miscellaneous">Miscellaneous</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
 
