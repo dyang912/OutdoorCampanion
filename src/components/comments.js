@@ -56,7 +56,7 @@ export function Comments({ postKey }) {
                     setTxt(e.target.value);
                 }}/>
             </div>
-            <Button className="ms-2" type="submit" >submit</Button>
+            <Button style={{background: "#8d9db6", border: "none"}} className="ms-2" type="submit" >submit</Button>
         </form>
     );
 }
