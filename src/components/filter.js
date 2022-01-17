@@ -4,7 +4,7 @@ import React from "react";
 export function Filter({ handleSelect }) {
     return (
         <Dropdown onSelect={handleSelect} className="m-3">
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle variant="secondary" style={{background: "#8d9db6", border: "none"}} id="dropdown-basic" className="filterbutton">
                 Filter
             </Dropdown.Toggle>
 

@@ -44,9 +44,9 @@
 
 .page-header{
   text-align: center;
-  background-color: #1e4021;
+  background-color: #bccad6;
   padding: 1%;
-  color: #a3947e;
+  color: #667292;
   
 }
 
@@ -67,6 +67,10 @@
 
 #profile-photo-container{
   text-align: center;
+}
+
+.filterbutton{
+  color: #87bdd8
 }
 
 

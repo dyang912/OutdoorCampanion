@@ -42,7 +42,7 @@ function NewPost({user, UName}) {
                               setOption(e.target.value);
                           }}
                     >
-                        <option>Select your category</option>
+                        <option>Select your category </option>
                         {options.map((option) => (
                             <option key={option.value} value={option.value}>{option.label}</option>
                         ))}
