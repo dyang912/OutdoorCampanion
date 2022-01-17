@@ -32,7 +32,7 @@ function App() {
     return (
         <BrowserRouter>
             <div className="page-header">
-                <h1>Outdoor Companion</h1>
+                <h1 style={{fontFamily:"Fredericka the Great"}} >Outdoor Companion</h1>
             </div>
 
             <Routes>

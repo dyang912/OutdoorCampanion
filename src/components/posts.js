@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-import {Card} from "react-bootstrap";
+import {Card, Image} from "react-bootstrap";
 import {Comments} from "./comments";
+import {isMobile} from 'react-device-detect';
 
 export const Feed = ({ posts, category }) => {
     return (
@@ -22,7 +23,12 @@ const Post = ({ post, handleClick }) => {
         >
             <Card.Body>
                 <Card.Title>{ post.text }</Card.Title>
-                { post.image? <Card.Img style={{width:"50%"}} src = { post.image } alt="postImage"/> : null }
+                { post.image?
+                    isMobile ?
+                        <Image src={post.image} alt="postImage" fluid={true} style={{maxWidth:"100%"}}/> :
+                        <Image src={post.image} alt="postImage" fluid={true} style={{maxWidth:"30%"}}/>
+                    : null
+                }
                 <Card.Text>
                     <small className="text-muted">{ post.creator + " " + new Date(post.time).toLocaleString() }</small>
                 </Card.Text>
