@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {Card, Image} from "react-bootstrap";
 import {Comments} from "./comments";
 import {isMobile} from 'react-device-detect';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 export const Feed = ({ posts, category, UName }) => {
     return (
@@ -18,8 +20,8 @@ const Post = ({ post, handleClick, UName }) => {
 
     return (
         <Card className="m-2"
-              onClick={() => setSelected(true)}
-              onDoubleClick={() => setSelected(false)}
+            //   onClick={() => setSelected(true)}
+            //   onDoubleClick={() => setSelected(false)}
         >
             <Card.Body>
                 <Card.Title>{ post.text }</Card.Title>
@@ -32,6 +34,8 @@ const Post = ({ post, handleClick, UName }) => {
                 <Card.Text>
                     <small className="text-muted">{ post.creator + " " + new Date(post.time).toLocaleString() }</small>
                 </Card.Text>
+                {selected ? <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>close comments</button> : <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>{!post.comments ? 0 : Object.keys(post.comments).length} comment(s)</button>}
+
             </Card.Body>
             {selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
