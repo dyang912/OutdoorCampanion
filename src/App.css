@@ -75,6 +75,12 @@
   color: #87bdd8
 }
 
+.comment-container{
+  overflow-y: scroll;
+  max-height: 35vh;
+
+}
+
 
 
 

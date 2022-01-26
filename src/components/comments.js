@@ -8,11 +8,13 @@ import {Button} from "react-bootstrap";
 const PostedComment = ({ comments }) => {
     if (comments) {
         return (
+            <div className = "comment-container">
             <Card className="m-2">
                 <ul className="list-group list-group-flush">
                     {comments.map(comment => <CommentText key={comment.commentKey} comment={comment} />)}
                 </ul>
             </Card>
+            </div>
         );
     }
     return null;

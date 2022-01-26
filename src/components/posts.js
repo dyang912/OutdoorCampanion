@@ -32,10 +32,7 @@ const Post = ({ post, handleClick, UName }) => {
             {selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
     );
-<<<<<<< HEAD
+}
 
-    // <i class="bi bi-x"></i>
-}
-=======
-}
->>>>>>> be174b38770745f04d9589a1b6c2d396957f396a
+
+
