@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import NewPost from "./pages/NewPost";
 import NavigationBar from "./components/navigationBar";
 import ErrorPage from "./pages/Error";
+import Share from "./components/share"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
+                <Route path="/share" element={<Share />} />
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
             <NavigationBar />

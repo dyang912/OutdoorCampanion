@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import {Card, Image} from "react-bootstrap";
 import {Comments} from "./comments";
 import {isMobile} from 'react-device-detect';
+import * as FaIcons from "react-icons/fa";
+import {Link, useLocation} from "react-router-dom";
+
 
 export const Feed = ({ posts, category }) => {
     return (
@@ -15,13 +18,42 @@ export const Feed = ({ posts, category }) => {
 
 const Post = ({ post, handleClick }) => {
     const [selected, setSelected] = useState(false);
+    const categoryfn = () =>{
+        if (post.category === 'event'){
+            return <div class="alert alert-primary">Event <FaIcons.FaHiking />
+                <Link to={"/share"}>
+                    <FaIcons.FaShare />
+                </Link>
+            </div>
+        }
+        else if (post.category === 'question'){
+            return <div class="alert alert-danger"> Question <FaIcons.FaQuestionCircle />
+                <Link to={"/share"}>
+                    <FaIcons.FaShare />
+                </Link>
+            </div>
+        }
+        else if (post.category === 'promotion'){
+            return <div class="alert alert-dark"> Promotion <FaIcons.FaBullhorn />
+                <Link to={"/share"}>
+                    <FaIcons.FaShare />
+                </Link>
+            </div>
+        }
+        else {
+            return <div class="alert alert-success"> Experience <FaIcons.FaCampground/>
+            </div>
+        }
+    }
 
     return (
         <Card className="m-2"
               onClick={() => setSelected(true)}
               onDoubleClick={() => setSelected(false)}
         >
+
             <Card.Body>
+                {categoryfn()}
                 <Card.Title>{ post.text }</Card.Title>
                 { post.image?
                     isMobile ?
@@ -35,5 +67,6 @@ const Post = ({ post, handleClick }) => {
             </Card.Body>
             {selected ? <Comments postKey={post.postKey}/>: null}
         </Card>
+
     );
 }
