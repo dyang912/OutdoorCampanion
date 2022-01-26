@@ -52,7 +52,7 @@ export function Comments({ postKey }) {
         <form onSubmit={pressSubmit} className="form-inline">
             <PostedComment comments={comments}/>
             <div className="ms-2">
-                <textarea onChange={(e) => {
+                <textarea value={txt} onChange={(e) => {
                     setTxt(e.target.value);
                 }}/>
             </div>

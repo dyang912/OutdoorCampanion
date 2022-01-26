@@ -22,7 +22,6 @@ export const useUserState = ({setUEmail, setUName, setUPhotoUrl}) => {
         onIdTokenChanged(auth, setUser);
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log("get state")
                 setUEmail(user.email)
                 setUName(user.displayName)
                 setUPhotoUrl(user.photoURL)
