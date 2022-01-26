@@ -37,7 +37,7 @@ function App() {
             </div>
 
             <Routes>
-                <Route path="/" element={<Community posts={posts} />} />
+                <Route path="/" element={<Community posts={posts} UName = {UName}/>} />
                 <Route path="/login" element={<Login user={user} UEmail={UEmail} UName={UName}
                                                      setUEmail={setUEmail} setUName={setUName}
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
@@ -46,7 +46,7 @@ function App() {
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
             <NavigationBar />
-            
+
         </BrowserRouter>
     );
 }
