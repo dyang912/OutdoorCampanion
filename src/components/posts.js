@@ -4,19 +4,20 @@ import {Comments} from "./comments";
 import {isMobile} from 'react-device-detect';
 import * as FaIcons from "react-icons/fa";
 import {Link, useLocation} from "react-router-dom";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-export const Feed = ({ posts, category }) => {
+export const Feed = ({ posts, category, UName }) => {
     return (
         <div className="feed">
             { posts ? Object.values(posts).filter(post => category === "" || post.category === category).map( post =>
-                <Post key={post.postKey} post={post}  />) : null
+                <Post key={post.postKey} post={post} UName = {UName}  />) : null
             }
         </div>
     );
 }
 
-const Post = ({ post, handleClick }) => {
+const Post = ({ post, handleClick, UName }) => {
     const [selected, setSelected] = useState(false);
     const categoryfn = () =>{
         if (post.category === 'event'){
@@ -46,10 +47,11 @@ const Post = ({ post, handleClick }) => {
         }
     }
 
+    const [commentOpen, setOpen] = useState(false);
     return (
         <Card className="m-2"
-              onClick={() => setSelected(true)}
-              onDoubleClick={() => setSelected(false)}
+            //   onClick={() => setSelected(true)}
+            //   onDoubleClick={() => setSelected(false)}
         >
 
             <Card.Body>
@@ -61,12 +63,14 @@ const Post = ({ post, handleClick }) => {
                         <Image src={post.image} alt="postImage" fluid={true} style={{maxWidth:"30%"}}/>
                     : null
                 }
-                <Card.Text>
-                    <small className="text-muted">{ post.creator + " " + new Date(post.time).toLocaleString() }</small>
-                </Card.Text>
+                <Card.Text>{post.creator + " " + new Date(post.time).toLocaleString()}</Card.Text>
+                {selected ? <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>close comments</button> : <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>{!post.comments ? 0 : Object.keys(post.comments).length} comment(s)</button>}
             </Card.Body>
-            {selected ? <Comments postKey={post.postKey}/>: null}
+            {selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
 
     );
 }
+
+
+

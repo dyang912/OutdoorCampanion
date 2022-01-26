@@ -15,11 +15,12 @@ import Share from "./components/share"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-    const [user] = useUserState();
-    const [UID, setUID] = useState("");
+    const [UEmail, setUEmail] = useState("");
     const [UName, setUName] = useState("");
     const [UPhotoUrl, setUPhotoUrl] = useState("");
+    const [user] = useUserState({setUEmail, setUName, setUPhotoUrl});
     const [posts, setPost] = useState();
+
 
     useEffect(() => {
         const db = ref(getDatabase(firebase), "/posts");
@@ -37,9 +38,9 @@ function App() {
             </div>
 
             <Routes>
-                <Route path="/" element={<Community posts={posts} />} />
-                <Route path="/login" element={<Login user={user} UID={UID} UName={UName}
-                                                     setUID={setUID} setUName={setUName}
+                <Route path="/" element={<Community posts={posts} UName = {UName}/>} />
+                <Route path="/login" element={<Login user={user} UEmail={UEmail} UName={UName}
+                                                     setUEmail={setUEmail} setUName={setUName}
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
@@ -47,7 +48,7 @@ function App() {
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
             <NavigationBar />
-            
+
         </BrowserRouter>
     );
 }

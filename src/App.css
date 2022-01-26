@@ -75,10 +75,15 @@
   color: #87bdd8
 }
 
-.form-container{
+.form-container {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.comment-container{
+  overflow-y: scroll;
+  max-height: 35vh;
+
 }
 
 

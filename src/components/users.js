@@ -11,11 +11,11 @@ export const SignInButton = ({ setUID, setUName, setUPhotoUrl }) => (
     }} >login</button></div>
 )
 
-export const SignOutButton = ({ setUID, setUName, setUPhotoUrl }) => (
+export const SignOutButton = ({ setUEmail, setUName, setUPhotoUrl }) => (
     <div className="d-grid gap-3 col-3 mx-auto m-5">
     <button type="button" className="btn btn-outline-dark" onClick={ () => {
         signOut();
-        setUID("");
+        setUEmail("");
         setUName("");
         setUPhotoUrl("");
     }}>logout</button></div>
