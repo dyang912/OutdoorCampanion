@@ -3,6 +3,7 @@ import {Card, Image} from "react-bootstrap";
 import {Comments} from "./comments";
 import {isMobile} from 'react-device-detect';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import * as FaIcons from "react-icons/fa";
 
 
 export const Feed = ({ posts, category, UName }) => {
@@ -18,12 +19,25 @@ export const Feed = ({ posts, category, UName }) => {
 const Post = ({ post, handleClick, UName }) => {
     const [selected, setSelected] = useState(false);
     const [commentOpen, setOpen] = useState(false);
+    const categoryfn = () =>{
+        if (post.category === 'event'){
+            return <div class="alert alert-primary">Event <FaIcons.FaHiking /></div>
+        }
+        else if (post.category === 'question'){
+            return <div class="alert alert-danger"> Question <FaIcons.FaQuestionCircle /></div>
+        }
+        else if (post.category === 'promotion'){
+            return <div class="alert alert-dark"> Promotion <FaIcons.FaBullhorn /> </div>
+        }
+        else return <div class="alert alert-success"> Experience <FaIcons.FaCampground/></div>
+    }
     return (
         <Card className="m-2"
             //   onClick={() => setSelected(true)}
             //   onDoubleClick={() => setSelected(false)}
         >
             <Card.Body>
+            {categoryfn()}
                 <Card.Title>{ post.text }</Card.Title>
                 { post.image?
                     isMobile ?
