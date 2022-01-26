@@ -3,17 +3,17 @@ import {Card, Image} from "react-bootstrap";
 import {Comments} from "./comments";
 import {isMobile} from 'react-device-detect';
 
-export const Feed = ({ posts, category }) => {
+export const Feed = ({ posts, category, UName }) => {
     return (
         <div className="feed">
             { posts ? Object.values(posts).filter(post => category === "" || post.category === category).map( post =>
-                <Post key={post.postKey} post={post}  />) : null
+                <Post key={post.postKey} post={post} UName = {UName}  />) : null
             }
         </div>
     );
 }
 
-const Post = ({ post, handleClick }) => {
+const Post = ({ post, handleClick, UName }) => {
     const [selected, setSelected] = useState(false);
 
     return (
@@ -33,7 +33,7 @@ const Post = ({ post, handleClick }) => {
                     <small className="text-muted">{ post.creator + " " + new Date(post.time).toLocaleString() }</small>
                 </Card.Text>
             </Card.Body>
-            {selected ? <Comments postKey={post.postKey}/>: null}
+            {selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
     );
 }

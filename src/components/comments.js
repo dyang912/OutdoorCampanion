@@ -23,18 +23,18 @@ const CommentText = ({ comment }) => {
         <li className="list-group-item">
             <Card.Text>{ comment.text }</Card.Text>
             <Card.Text>
-                <small className="text-muted">{ new Date(comment.time).toLocaleString() }</small>
+                <small className="text-muted">{ comment.user + "    " + new Date(comment.time).toLocaleString() }</small>
             </Card.Text>
         </li>
     )
 }
 
-export function Comments({ postKey }) {
+export function Comments({ postKey, UName }) {
     const [txt, setTxt] = useState("")
 
     const pressSubmit = (event) => {
         event.preventDefault();
-        add_post_comment(postKey, txt);
+        add_post_comment(postKey, txt, UName);
         setTxt("");
     }
 

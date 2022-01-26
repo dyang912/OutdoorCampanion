@@ -2,7 +2,8 @@ import {get, ref, set} from "firebase/database";
 import {db} from "./firebase";
 import {getRandomInt} from "./utils";
 
-export function add_post_comment(postKey, commentTxt) {
+
+export function add_post_comment(postKey, commentTxt, UName) {
     const commentKey = getRandomInt();
     const path = 'posts/' + postKey + '/comments/' + commentKey;
 
@@ -10,6 +11,7 @@ export function add_post_comment(postKey, commentTxt) {
         text: commentTxt,
         commentKey: commentKey,
         time: Date.now(),
+        user: UName,
     }).then(() => {
         alert("comment success!")
     }).catch((error) => {
