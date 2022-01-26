@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {Card, Image} from "react-bootstrap";
 import {Comments} from "./comments";
 import {isMobile} from 'react-device-detect';
+import * as FaIcons from "react-icons/fa";
+import {Link, useLocation} from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import * as FaIcons from "react-icons/fa";
 
@@ -18,6 +20,34 @@ export const Feed = ({ posts, category, UName }) => {
 
 const Post = ({ post, handleClick, UName }) => {
     const [selected, setSelected] = useState(false);
+    const categoryfn = () =>{
+        if (post.category === 'event'){
+            return <div class="alert alert-primary">Event <FaIcons.FaHiking />
+                <Link to={"/share"}>
+                    <FaIcons.FaShare />
+                </Link>
+            </div>
+        }
+        else if (post.category === 'question'){
+            return <div class="alert alert-danger"> Question <FaIcons.FaQuestionCircle />
+                <Link to={"/share"}>
+                    <FaIcons.FaShare />
+                </Link>
+            </div>
+        }
+        else if (post.category === 'promotion'){
+            return <div class="alert alert-dark"> Promotion <FaIcons.FaBullhorn />
+                <Link to={"/share"}>
+                    <FaIcons.FaShare />
+                </Link>
+            </div>
+        }
+        else {
+            return <div class="alert alert-success"> Experience <FaIcons.FaCampground/>
+            </div>
+        }
+    }
+
     const [commentOpen, setOpen] = useState(false);
     const categoryfn = () =>{
         if (post.category === 'event'){
@@ -36,8 +66,13 @@ const Post = ({ post, handleClick, UName }) => {
             //   onClick={() => setSelected(true)}
             //   onDoubleClick={() => setSelected(false)}
         >
+
             <Card.Body>
+<<<<<<< HEAD
             {categoryfn()}
+=======
+                {categoryfn()}
+>>>>>>> e46efdcead3b5c4c5705b2e2bfc8c6f75d08ab1f
                 <Card.Title>{ post.text }</Card.Title>
                 { post.image?
                     isMobile ?
@@ -50,6 +85,7 @@ const Post = ({ post, handleClick, UName }) => {
             </Card.Body>
             {selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
+
     );
 }
 
