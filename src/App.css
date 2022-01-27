@@ -86,7 +86,14 @@
 
 }
 
+.shareIconDiv{
+  margin-left: auto;
+  margin-right: 2%;
+}
 
+.shareIcon{
+  font-size: 1.5em;
+}
 
 
 

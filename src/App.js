@@ -44,7 +44,7 @@ function App() {
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
-                <Route path="/share" element={<Share />} />
+                <Route path="/share" element={<Share UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
             <NavigationBar />

@@ -1,11 +1,11 @@
 import React, {useState} from "react";
-import {Card, Image} from "react-bootstrap";
+import {Card, Image, Dropdown} from "react-bootstrap";
 import {Comments} from "./comments";
 import {isMobile} from 'react-device-detect';
 import * as FaIcons from "react-icons/fa";
+import * as ImIcons from "react-icons/im";
 import {Link, useLocation} from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import * as FaIcons from "react-icons/fa";
 
 
 export const Feed = ({ posts, category, UName }) => {
@@ -22,62 +22,78 @@ const Post = ({ post, handleClick, UName }) => {
     const [selected, setSelected] = useState(false);
     const categoryfn = () =>{
         if (post.category === 'event'){
-            return <div class="alert alert-primary">Event <FaIcons.FaHiking />
-                <Link to={"/share"}>
-                    <FaIcons.FaShare />
-                </Link>
-            </div>
+            return <div className="alert alert-primary" style={{display: 'flex'}}>Event <FaIcons.FaHiking />
+                    <div className="shareIconDiv" >
+                        <Link to={"/share"}>
+                            <div style={{width: 100+'%'}}>
+                                <ImIcons.ImShare className="shareIcon"/>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
         }
         else if (post.category === 'question'){
-            return <div class="alert alert-danger"> Question <FaIcons.FaQuestionCircle />
-                <Link to={"/share"}>
-                    <FaIcons.FaShare />
-                </Link>
-            </div>
+            return <div className="alert alert-danger" style={{display: 'flex'}}> Question <FaIcons.FaQuestionCircle />
+                    <div className="shareIconDiv" >
+                        <Link to={"/share"} >
+                            <div style={{width: 100+'%'}}>
+                                <ImIcons.ImShare className="shareIcon" style={{color: '#800000'}}/>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
         }
         else if (post.category === 'promotion'){
-            return <div class="alert alert-dark"> Promotion <FaIcons.FaBullhorn />
-                <Link to={"/share"}>
-                    <FaIcons.FaShare />
-                </Link>
-            </div>
+            return <div className="alert alert-dark"  style={{display: 'flex'}}> Promotion <FaIcons.FaBullhorn />
+                    <div className="shareIconDiv" >
+                        <Link to={"/share"}>
+                            <div style={{width: 100+'%'}}>
+                                <ImIcons.ImShare className="shareIcon" style={{color: '#000000'}}/>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
         }
         else {
-            return <div class="alert alert-success"> Experience <FaIcons.FaCampground/>
-            </div>
+            return <div className="alert alert-success"  style={{display: 'flex'}}> Experience <FaIcons.FaCampground/>
+                    <div className="shareIconDiv" >
+                        <Link to={"/share"}>
+                            <div style={{width: 100+'%'}}>
+                                <ImIcons.ImShare className="shareIcon" style={{color: '#2E8B57'}}/>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
         }
     }
 
     const [commentOpen, setOpen] = useState(false);
-    const categoryfn = () =>{
-        if (post.category === 'event'){
-            return <div class="alert alert-primary">Event <FaIcons.FaHiking /></div>
-        }
-        else if (post.category === 'question'){
-            return <div class="alert alert-danger"> Question <FaIcons.FaQuestionCircle /></div>
-        }
-        else if (post.category === 'promotion'){
-            return <div class="alert alert-dark"> Promotion <FaIcons.FaBullhorn /> </div>
-        }
-        else return <div class="alert alert-success"> Experience <FaIcons.FaCampground/></div>
-    }
+
     return (
         <Card className="m-2"
-            //   onClick={() => setSelected(true)}
-            //   onDoubleClick={() => setSelected(false)}
         >
-
             <Card.Body>
-<<<<<<< HEAD
-            {categoryfn()}
-=======
                 {categoryfn()}
->>>>>>> e46efdcead3b5c4c5705b2e2bfc8c6f75d08ab1f
+                {/*<Dropdown>*/}
+                {/*    <Dropdown.Toggle variant="success" id="dropdown-basic">*/}
+                {/*        Dropdown Button*/}
+                {/*    </Dropdown.Toggle>*/}
+
+                {/*    <Dropdown.Menu>*/}
+                {/*        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>*/}
+                {/*        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>*/}
+                {/*        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>*/}
+                {/*    </Dropdown.Menu>*/}
+                {/*</Dropdown>*/}
                 <Card.Title>{ post.text }</Card.Title>
                 { post.image?
-                    isMobile ?
-                        <Image src={post.image} alt="postImage" fluid={true} style={{maxWidth:"100%"}}/> :
-                        <Image src={post.image} alt="postImage" fluid={true} style={{maxWidth:"30%"}}/>
+                     isMobile ?(
+                         <div style={{width: 100+'%', height: 100+'%'}}>
+                        <Image src={post.image} alt="postImage" fluid={true} style={{width: 80+'%'}}/>
+                         </div>):
+                         (<div style={{width: 100+'%', height: 100+'%'}}>
+                        <Image src={post.image} alt="postImage" fluid={true} style={{width: 50+'%'}}/>
+                         </div>)
                     : null
                 }
                 <Card.Text>{post.creator + " " + new Date(post.time).toLocaleString()}</Card.Text>
