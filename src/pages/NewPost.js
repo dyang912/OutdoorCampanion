@@ -1,9 +1,14 @@
 import React, {useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import {make_post} from "../database/posts";
+import DateTimePicker from 'react-datetime-picker';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import Geocode from "react-geocode";
 
 function NewPost({user, UName}) {
     const [posttext, makePost] = useState("");
+    const [postTime, setTime] = useState(new Date());
+    const [postLocation, setLocation] = useState([42.0451, -87.6877]);
     const [now, setOption] = useState("event");
     const navigate = useNavigate();
 
@@ -25,6 +30,35 @@ function NewPost({user, UName}) {
             value: "miscellaneous",
         },
     ];
+
+    const Markers = () => {
+        useMapEvents({
+            click(e) {
+                Geocode.setApiKey("AIzaSyAy1LtG2L3JMpKHBsIqJwRGE82h4zRBP-c");
+                Geocode.fromLatLng(e.latlng.lat.toString(), e.latlng.lng.toString()).then(
+                    (response) => {
+                        const address = response.results[0].formatted_address;
+                        console.log(address);
+                    },
+                    (error) => {
+                        console.error(error);
+                    }
+                );
+                setLocation([
+                    e.latlng.lat,
+                    e.latlng.lng
+                ]);
+            },
+        })
+
+        return (
+            <Marker
+                key={postLocation[0]}
+                position={postLocation}
+                interactive={false}
+            />
+        )
+    }
 
     return (
         <div>
@@ -49,12 +83,32 @@ function NewPost({user, UName}) {
                     </select>
                 </div>
 
+                {now === "event" ? <div>
+                        <label htmlFor="formtext" className="form-label">When will the event be held?</label>
+                        <br/>
+                        <DateTimePicker onChange={setTime} value={postTime}/>
+                        <br/>
+
+                        <label htmlFor="formtext" className="form-label">Where will the event be held?</label>
+                        <div>
+                            <MapContainer center={postLocation} zoom={15} scrollWheelZoom={false} >
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <Markers/>
+                            </MapContainer>
+                        </div>
+                    </div> : null }
+
+                <label htmlFor="formtext" className="form-label">Want to share any pictures?</label>
                 <input
                    className="form-control" name="files[] " id="files " type="file"
                 />
                 <div className="d-grid gap-3 col-3 mx-auto p-2">
                     <button type="button" className="btn btn-outline-dark" onClick={() => {
-                        user ? make_post(posttext, UName, now, navigate, document.getElementById("files ").files[0]) :
+                        user ? make_post(posttext, UName, now, navigate,
+                                        document.getElementById("files ").files[0],
+                                        postTime, postLocation) :
                                alert("please login!"); navigate('/login');
                     }}>post</button>
                 </div>

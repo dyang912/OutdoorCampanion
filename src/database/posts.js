@@ -3,7 +3,7 @@ import {getStorage, ref as reference, uploadBytesResumable, getDownloadURL} from
 import {db} from "./firebase";
 import {getRandomInt} from "./utils";
 
-function finishPosting(writtentext, userName, category, navigate,url){
+function finishPosting(writtentext, userName, category, navigate, url, time, location){
   const postkey = getRandomInt();
   set(ref(db, 'posts/' + postkey), {
       text: writtentext,
@@ -12,6 +12,8 @@ function finishPosting(writtentext, userName, category, navigate,url){
       creator: userName,
       category: category,
       image: url,
+      heldTime: time.toString(),
+      heldLocation: location
   }).then(() => {
       alert("post success!")
       navigate('/')
@@ -20,7 +22,7 @@ function finishPosting(writtentext, userName, category, navigate,url){
   });
 }
 
-export async function make_post(writtentext, userName, category, navigate, file) {
+export async function make_post(writtentext, userName, category, navigate, file, time, location) {
     if (file) {
         const storage = getStorage();
 
@@ -72,12 +74,12 @@ export async function make_post(writtentext, userName, category, navigate, file)
 
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     console.log('File available at', downloadURL);
-                    finishPosting(writtentext, userName, category, navigate, downloadURL);
+                    finishPosting(writtentext, userName, category, navigate, downloadURL, time, location);
                 });
             }
         );
     } else {
-        finishPosting(writtentext, userName, category, navigate, "");
+        finishPosting(writtentext, userName, category, navigate, "", time, location);
     }
 }
 
