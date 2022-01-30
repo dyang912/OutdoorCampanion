@@ -86,7 +86,7 @@ const Post = ({ post, handleClick, UName }) => {
                 {/*    </Dropdown.Menu>*/}
                 {/*</Dropdown>*/}
                 <Card.Title>{ post.text }</Card.Title>
-                { post.image?
+                { post.image ?
                      isMobile ?(
                          <div style={{width: 100+'%', height: 100+'%'}}>
                         <Image src={post.image} alt="postImage" fluid={true} style={{width: 80+'%'}}/>
@@ -96,9 +96,10 @@ const Post = ({ post, handleClick, UName }) => {
                          </div>)
                     : null
                 }
-                {post.heldTime? <div><Card.Text>{"Time: " + post.heldTime} </Card.Text> <Card.Text> {"Location: " + post.address}</Card.Text> </div> : null}
+                { post.heldTime ? <Card.Text>{"Time: " + post.heldTime}</Card.Text> : null }
+                { post.address ? <Card.Text> {"Location: " + post.address}</Card.Text> : null }
                 <Card.Text><small className="text-muted">{post.creator + " " + new Date(post.time).toLocaleString()}</small></Card.Text>
-                {selected ? <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>close comments</button> : <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>{!post.comments ? 0 : Object.keys(post.comments).length} comment(s)</button>}
+                { selected ? <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>close comments</button> : <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>{!post.comments ? 0 : Object.keys(post.comments).length} comment(s)</button>}
             </Card.Body>
             {selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>

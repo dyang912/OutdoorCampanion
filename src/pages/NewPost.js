@@ -28,7 +28,7 @@ function NewPost({user, UName}) {
             value: "promotion",
         },
         {
-            label: "Miscellaneous",
+            label: "Experience",
             value: "miscellaneous",
         },
     ];
@@ -41,7 +41,6 @@ function NewPost({user, UName}) {
                     (response) => {
                         const address = response.results[0].formatted_address;
                         setAddress(address.toString());
-                        console.log(address);
                     },
                     (error) => {
                         console.error(error);
@@ -113,7 +112,7 @@ function NewPost({user, UName}) {
                     <button type="button" className="btn btn-outline-dark" onClick={() => {
                         user ? make_post(posttext, UName, now, navigate,
                                         document.getElementById("files ").files[0],
-                                        postTime, postLocation, address.toString()) :
+                                        postTime, address) :
                                alert("please login!"); navigate('/login');
                     }}>post</button>
                 </div>
