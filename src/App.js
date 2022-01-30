@@ -7,6 +7,7 @@ import {onValue, getDatabase, ref} from "firebase/database"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import Community from "./pages/Community";
+import Chat from "./pages/Chat";
 import Login from "./pages/Login";
 import NewPost from "./pages/NewPost";
 import NavigationBar from "./components/navigationBar";
@@ -44,6 +45,9 @@ function App() {
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
+                <Route path="/chat" element={<Chat user={user} UEmail={UEmail} UName={UName}
+                                                     setUEmail={setUEmail} setUName={setUName}
+                                                     UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}/>} />
                 <Route path="/share" element={<Share UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
