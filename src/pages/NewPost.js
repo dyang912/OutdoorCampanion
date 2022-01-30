@@ -85,15 +85,14 @@ function NewPost({user, UName}) {
                     </select>
                 </div>
 
-                {now === "event" ? <div>
+                { now === "event" ?
+                    <div>
                         <label htmlFor="formtext" className="form-label">When will the event be held?</label>
-                        <br/>
-                    <div className="time">
-                        <DateTimePicker onChange={setTime} value={postTime} />
-                    </div>
-                        <br/>
+                        <div className="time">
+                            <DateTimePicker onChange={setTime} value={postTime} />
+                        </div>
 
-                        <label htmlFor="formtext" className="form-label">Where will the event be held?</label>
+                        <label htmlFor="formtext" className="form-label mt-3">Where will the event be held? {address ? "("+address+")":null}</label>
                         <div className="map">
                             <MapContainer center={postLocation} zoom={15} scrollWheelZoom={false} >
                                 <TileLayer
@@ -104,17 +103,18 @@ function NewPost({user, UName}) {
                         </div>
                     </div> : null }
 
-                <label htmlFor="formtext" className="form-label">Want to share any pictures?</label>
-                <input
-                   className="form-control" name="files[] " id="files " type="file"
-                />
-                <div className="d-grid gap-3 col-3 mx-auto p-2">
+                <div className="mt-3">
+                    <label htmlFor="formtext" className="form-label">Want to share any pictures? (Optional)</label>
+                    <input className="form-control" name="files[] " id="files " type="file" />
+                </div>
+
+                <div className="d-grid gap-3 col-3 mx-auto p-2 mt-3">
                     <button type="button" className="btn btn-outline-dark" onClick={() => {
                         user ? make_post(posttext, UName, now, navigate,
                                         document.getElementById("files ").files[0],
                                         postTime, address) :
                                alert("please login!"); navigate('/login');
-                    }}>post</button>
+                    }}>Post</button>
                 </div>
 
             </form>

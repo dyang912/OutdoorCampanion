@@ -4,7 +4,7 @@ import {SignInButton, SignOutButton} from "../components/users";
 function Login({ user, UEmail, setUEmail, UName, setUName, UPhotoUrl, setUPhotoUrl}) {
     return (
         <div>
-            {user ? null : <p className = "login-header">Login to unlock the outdoors!</p> }
+            { user ? null : <p className = "login-header">Login to unlock the outdoors!</p> }
             { user ? <SignOutButton setUEmail={setUEmail} setUName={setUName} setUPhotoUrl = {setUPhotoUrl}/> :
                       <SignInButton setUEmail={setUEmail} setUName={setUName} setUPhotoUrl = {setUPhotoUrl}/> }
             <div className="row">
@@ -16,8 +16,6 @@ function Login({ user, UEmail, setUEmail, UName, setUName, UPhotoUrl, setUPhotoU
                     {user? <div>Your email: {UEmail ? UEmail : "NULL"}</div> : null}
                 </div>
             </div>
-
-
         </div>
     );
 }

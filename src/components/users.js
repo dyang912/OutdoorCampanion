@@ -8,7 +8,7 @@ export const SignInButton = ({ setUID, setUName, setUPhotoUrl }) => (
             setUName(name);
             setUPhotoUrl(photoUrl);
         })
-    }} >login</button></div>
+    }} >Login</button></div>
 )
 
 export const SignOutButton = ({ setUEmail, setUName, setUPhotoUrl }) => (
@@ -18,5 +18,5 @@ export const SignOutButton = ({ setUEmail, setUName, setUPhotoUrl }) => (
         setUEmail("");
         setUName("");
         setUPhotoUrl("");
-    }}>logout</button></div>
+    }}>Logout</button></div>
 )
