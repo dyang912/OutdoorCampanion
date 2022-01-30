@@ -96,7 +96,7 @@ const Post = ({ post, handleClick, UName }) => {
                          </div>)
                     : null
                 }
-                {post.heldTime? <Card.Text>{"Time: " + post.heldTime + ", Location: " + post.heldLocation}</Card.Text> : null}
+                {post.heldTime? <div><Card.Text>{"Time: " + post.heldTime} </Card.Text> <Card.Text> {"Location: " + post.address}</Card.Text> </div> : null}
                 <Card.Text><small className="text-muted">{post.creator + " " + new Date(post.time).toLocaleString()}</small></Card.Text>
                 {selected ? <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>close comments</button> : <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>{!post.comments ? 0 : Object.keys(post.comments).length} comment(s)</button>}
             </Card.Body>

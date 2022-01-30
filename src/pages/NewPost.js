@@ -9,6 +9,7 @@ function NewPost({user, UName}) {
     const [posttext, makePost] = useState("");
     const [postTime, setTime] = useState(new Date());
     const [postLocation, setLocation] = useState([42.0451, -87.6877]);
+    const [address, setAddress] = useState("")
     const [now, setOption] = useState("event");
     const navigate = useNavigate();
 
@@ -34,10 +35,11 @@ function NewPost({user, UName}) {
     const Markers = () => {
         useMapEvents({
             click(e) {
-                Geocode.setApiKey("AIzaSyAy1LtG2L3JMpKHBsIqJwRGE82h4zRBP-c");
+                Geocode.setApiKey("AIzaSyCIwoCr3O61OosaVtznEsUXXTyq24z79Tg");
                 Geocode.fromLatLng(e.latlng.lat.toString(), e.latlng.lng.toString()).then(
                     (response) => {
                         const address = response.results[0].formatted_address;
+                        setAddress(address.toString());
                         console.log(address);
                     },
                     (error) => {
@@ -86,11 +88,13 @@ function NewPost({user, UName}) {
                 {now === "event" ? <div>
                         <label htmlFor="formtext" className="form-label">When will the event be held?</label>
                         <br/>
-                        <DateTimePicker onChange={setTime} value={postTime}/>
+                    <div className="time">
+                        <DateTimePicker onChange={setTime} value={postTime} />
+                    </div>
                         <br/>
 
                         <label htmlFor="formtext" className="form-label">Where will the event be held?</label>
-                        <div>
+                        <div className="map">
                             <MapContainer center={postLocation} zoom={15} scrollWheelZoom={false} >
                                 <TileLayer
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -108,7 +112,7 @@ function NewPost({user, UName}) {
                     <button type="button" className="btn btn-outline-dark" onClick={() => {
                         user ? make_post(posttext, UName, now, navigate,
                                         document.getElementById("files ").files[0],
-                                        postTime, postLocation) :
+                                        postTime, postLocation, address.toString()) :
                                alert("please login!"); navigate('/login');
                     }}>post</button>
                 </div>
