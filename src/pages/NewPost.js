@@ -4,6 +4,7 @@ import {make_post} from "../database/posts";
 import DateTimePicker from 'react-datetime-picker';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
 import Geocode from "react-geocode";
+import {apikey} from "../env"
 
 function NewPost({user, UName}) {
     const [posttext, makePost] = useState("");
@@ -35,7 +36,7 @@ function NewPost({user, UName}) {
     const Markers = () => {
         useMapEvents({
             click(e) {
-                Geocode.setApiKey("AIzaSyCIwoCr3O61OosaVtznEsUXXTyq24z79Tg");
+                Geocode.setApiKey(apikey);
                 Geocode.fromLatLng(e.latlng.lat.toString(), e.latlng.lng.toString()).then(
                     (response) => {
                         const address = response.results[0].formatted_address;
