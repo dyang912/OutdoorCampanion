@@ -113,7 +113,7 @@ function NewPost({user, UName}) {
                         user ? make_post(posttext, UName, now, navigate,
                                         document.getElementById("files ").files[0],
                                         postTime, address) :
-                               alert("please login!"); navigate('/login');
+                                (() => {alert("please login!"); navigate('/login');})()
                     }}>Post</button>
                 </div>
 
