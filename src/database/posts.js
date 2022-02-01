@@ -1,15 +1,16 @@
-import {child, get, orderByChild, ref, set} from "firebase/database";
+import {child, get, orderByChild, ref, set, remove} from "firebase/database";
 import {getStorage, ref as reference, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {db} from "./firebase";
 import {getRandomInt} from "./utils";
 
-function finishPosting(writtentext, userName, category, navigate, url, time, address){
+function finishPosting(writtentext, UName, UEmail, category, navigate, url, time, address){
   const postkey = getRandomInt();
   set(ref(db, 'posts/' + postkey), {
       text: writtentext,
       time: Date.now(),
       postKey: postkey,
-      creator: userName,
+      creator: UName,
+      creatorEmail: UEmail,
       category: category,
       image: url,
       heldTime: time.toString(),
@@ -22,7 +23,7 @@ function finishPosting(writtentext, userName, category, navigate, url, time, add
   });
 }
 
-export async function make_post(writtentext, userName, category, navigate, file, time, address) {
+export async function make_post(writtentext, UName, UEmail, category, navigate, file, time, address) {
     if (file) {
         const storage = getStorage();
 
@@ -74,12 +75,12 @@ export async function make_post(writtentext, userName, category, navigate, file,
 
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     console.log('File available at', downloadURL);
-                    finishPosting(writtentext, userName, category, navigate, downloadURL, time, address);
+                    finishPosting(writtentext, UName, UEmail, category, navigate, downloadURL, time, address);
                 });
             }
         );
     } else {
-        finishPosting(writtentext, userName, category, navigate, "", time, address);
+        finishPosting(writtentext, UName, UEmail, category, navigate, "", time, address);
     }
 }
 
@@ -95,5 +96,13 @@ export async function fetch_posts() {
         }
     }).catch((error) => {
         console.error(error);
+    });
+}
+
+export async function delete_post(postkey){
+    remove(ref(db, 'posts/' + postkey)).then(() => {
+        alert("delete success!")
+    }).catch((error) => {
+        console.log(error);
     });
 }

@@ -1,24 +1,25 @@
 import React, {useState} from "react";
-import {Card, Image, Dropdown} from "react-bootstrap";
+import {Card, Image} from "react-bootstrap";
 import {Comments} from "./comments";
 import {isMobile} from 'react-device-detect';
 import * as FaIcons from "react-icons/fa";
 import * as ImIcons from "react-icons/im";
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
+import {delete_post} from "../database/posts";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-export const Feed = ({ posts, category, UName }) => {
+export const Feed = ({ posts, category, UName, UEmail }) => {
     return (
         <div className="feed">
             { posts ? Object.values(posts).filter(post => category === "" || post.category === category).map( post =>
-                <Post key={post.postKey} post={post} UName = {UName}  />) : null
+                <Post key={post.postKey} post={post} UName={UName} UEmail={UEmail} />) : null
             }
         </div>
     );
 }
 
-const Post = ({ post, handleClick, UName }) => {
+const Post = ({ post, UName, UEmail }) => {
     const [selected, setSelected] = useState(false);
     const categoryfn = () =>{
         if (post.category === 'event'){
@@ -67,11 +68,8 @@ const Post = ({ post, handleClick, UName }) => {
         }
     }
 
-    const [commentOpen, setOpen] = useState(false);
-
     return (
-        <Card className="m-2"
-        >
+        <Card className="m-2">
             <Card.Body>
                 {categoryfn()}
                 {/*<Dropdown>*/}
@@ -99,9 +97,20 @@ const Post = ({ post, handleClick, UName }) => {
                 { post.heldTime ? <Card.Text>{"Time: " + post.heldTime}</Card.Text> : null }
                 { post.address ? <Card.Text> {"Location: " + post.address}</Card.Text> : null }
                 <Card.Text><small className="text-muted">{post.creator + " " + new Date(post.time).toLocaleString()}</small></Card.Text>
-                { selected ? <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>close comments</button> : <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>{!post.comments ? 0 : Object.keys(post.comments).length} comment(s)</button>}
+                { selected ?
+                    <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>
+                        close comments
+                    </button> :
+                    <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>
+                        {!post.comments ? 0 : Object.keys(post.comments).length} comment(s)
+                    </button>
+                }
+                { UEmail===post.creatorEmail ? <button type="button" className="btn btn-outline-dark ms-2"
+                                                 onClick={() => delete_post(post.postKey)}>
+                                            delete
+                                         </button> : null}
             </Card.Body>
-            {selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
+            { selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
 
     );
