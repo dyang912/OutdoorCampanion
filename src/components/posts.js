@@ -110,8 +110,10 @@ const Post = ({ post, UName, UEmail }) => {
                 }
                 { liked?
                     <button type="button" className="bi bi-heart-fill" onClick={() => {setLiked(false); unlike_post(post.postKey, UEmail)}}>
+                    {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
                     </button> :
                     <button type="button" className="bi bi-heart" onClick={() => {setLiked(true); like_post(post.postKey,UEmail)}}>
+                    {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
                     </button>
                 }
                 { UEmail===post.creatorEmail ? <button type="button" className="btn btn-outline-dark ms-2"
