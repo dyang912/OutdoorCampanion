@@ -133,17 +133,15 @@ export async function unlike_post(postKey, UEmail){
 
 }
 
-export async function check_if_liked(postKey, UEmail) {
+export async function check_if_liked(postKey, UEmail, setLiked) {
     const user= UEmail.replace(".", "_");
     const path = 'posts/' + postKey + '/likes/';
     return await get(ref(db, path)).then((snapshot) => {
         snapshot.forEach((val) => {
-            console.log(val.val().user);
-            if (val.val().user === UEmail){
-                return true;
+            if (val.val().user == UEmail){
+                setLiked(true);
              }
         });
-        return false;
     }).catch((error) => {
         console.error(error);
     });

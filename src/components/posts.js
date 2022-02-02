@@ -22,7 +22,8 @@ export const Feed = ({ posts, category, UName, UEmail }) => {
 
 const Post = ({ post, UName, UEmail }) => {
     const [selected, setSelected] = useState(false);
-    const [liked, setLiked] = useState(check_if_liked(post.postKey,UEmail));
+    const [liked, setLiked] = useState(false);
+    check_if_liked(post.postKey, UEmail, setLiked);
     const categoryfn = () =>{
         if (post.category === 'event'){
             return <div className="alert alert-primary" style={{display: 'flex'}}>Event <FaIcons.FaHiking />
