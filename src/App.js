@@ -2,6 +2,7 @@ import './App.css';
 import {useEffect, useState} from 'react';
 import {firebase} from "./database/firebase";
 import {fetch_posts} from "./database/posts.js";
+import {fetch_messages} from "./pages/Chat.js";
 import {useUserState} from "./database/users";
 import {onValue, getDatabase, ref} from "firebase/database"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
@@ -21,6 +22,7 @@ function App() {
     const [UPhotoUrl, setUPhotoUrl] = useState("");
     const [user] = useUserState({setUEmail, setUName, setUPhotoUrl});
     const [posts, setPost] = useState();
+    const [messages, setMessages] = useState();
 
 
     useEffect(() => {
@@ -29,7 +31,17 @@ function App() {
             fetch_posts().then(value => {
                 setPost(value)
             })
+
         })
+        const messagesdb = ref(getDatabase(firebase), "/messages");
+        onValue(messagesdb, () => {
+            fetch_messages().then(value => {
+                setMessages(value)
+            })
+            console.log(messages)
+
+        })
+
     }, []);
 
     return (
@@ -45,9 +57,7 @@ function App() {
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
-                <Route path="/chat" element={<Chat user={user} UEmail={UEmail} UName={UName}
-                                                     setUEmail={setUEmail} setUName={setUName}
-                                                     UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}/>} />
+                //<Route path="/chat" element={<Chat messages={messages}/>} />
                 <Route path="/share" element={<Share UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
