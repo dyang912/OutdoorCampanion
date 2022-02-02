@@ -106,3 +106,45 @@ export async function delete_post(postkey){
         console.log(error);
     });
 }
+
+export async function like_post(postKey, UEmail){
+    const user= UEmail.replace(".", "_");
+    const path = 'posts/' + postKey + '/likes/' + user;
+    set(ref(db, path), {
+        user: UEmail,
+    }).then(() => {
+        alert("like success!")
+    }).catch((error) => {
+        console.log(error);
+    });
+
+}
+
+export async function unlike_post(postKey, UEmail){
+    const user= UEmail.replace(".", "_");
+    const path = 'posts/' + postKey + '/likes/' + user;
+    remove(ref(db, path), {
+        user: UEmail,
+    }).then(() => {
+        alert("unlike success!")
+    }).catch((error) => {
+        console.log(error);
+    });
+
+}
+
+export async function check_if_liked(postKey, UEmail) {
+    const user= UEmail.replace(".", "_");
+    const path = 'posts/' + postKey + '/likes/';
+    return await get(ref(db, path)).then((snapshot) => {
+        snapshot.forEach((val) => {
+            console.log(val.val().user);
+            if (val.val().user === UEmail){
+                return true;
+             }
+        });
+        return false;
+    }).catch((error) => {
+        console.error(error);
+    });
+}

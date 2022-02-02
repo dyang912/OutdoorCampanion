@@ -5,8 +5,9 @@ import {isMobile} from 'react-device-detect';
 import * as FaIcons from "react-icons/fa";
 import * as ImIcons from "react-icons/im";
 import {Link} from "react-router-dom";
-import {delete_post} from "../database/posts";
+import {delete_post,like_post, unlike_post,check_if_liked} from "../database/posts";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+//import { check } from "prettier";
 
 
 export const Feed = ({ posts, category, UName, UEmail }) => {
@@ -21,6 +22,7 @@ export const Feed = ({ posts, category, UName, UEmail }) => {
 
 const Post = ({ post, UName, UEmail }) => {
     const [selected, setSelected] = useState(false);
+    const [liked, setLiked] = useState(check_if_liked(post.postKey,UEmail));
     const categoryfn = () =>{
         if (post.category === 'event'){
             return <div className="alert alert-primary" style={{display: 'flex'}}>Event <FaIcons.FaHiking />
@@ -105,11 +107,21 @@ const Post = ({ post, UName, UEmail }) => {
                         {!post.comments ? 0 : Object.keys(post.comments).length} comment(s)
                     </button>
                 }
+                { liked?
+                    <button type="button" className="bi bi-heart-fill" onClick={() => {setLiked(false); unlike_post(post.postKey, UEmail)}}>
+                    </button> :
+                    <button type="button" className="bi bi-heart" onClick={() => {setLiked(true); like_post(post.postKey,UEmail)}}>
+                    </button>
+                }
                 { UEmail===post.creatorEmail ? <button type="button" className="btn btn-outline-dark ms-2"
                                                  onClick={() => delete_post(post.postKey)}>
                                             delete
                                          </button> : null}
+                
+                
+                            
             </Card.Body>
+            
             { selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
 
