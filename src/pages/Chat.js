@@ -3,7 +3,7 @@ import {firebase, db} from "../database/firebase";
 import { child, get, orderByChild, ref, set } from "firebase/database"
 import { getFirestore, collection, query, orderBy, limit, serverTimestamp, setDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-//import './Chat.css';
+import './Chat.css';
 
 
 
@@ -36,8 +36,6 @@ function Chat(messages) {
   const dummy = useRef();
   //const messagesRef = collection(db, "messages");
 
-  console.log(messages);
-
 
 
   const [formValue, setFormValue] = useState('');
@@ -63,13 +61,13 @@ function Chat(messages) {
   }
 
   return (<div>
-    <div>
+    <main>
 
-      {Object.values(messages).map(msg => <ChatMessage key={msg.id} text={msg.text} uid={msg.uid} photoURL={msg.photoURL} />)}
+      {messages.messages ? Object.values(messages.messages).map(msg => <ChatMessage key={msg.id} text={msg.text} uid={msg.uid} photoURL={msg.photoURL} />) : null}
 
       <span ref={dummy}></span>
 
-    </div>
+    </main>
 
     <form onSubmit={sendMessage}>
 
@@ -82,7 +80,7 @@ function Chat(messages) {
 }
 
 
-const ChatMessage = ({ key, text, uid, photoURL }) => {
+const ChatMessage = ({text, uid, photoURL }) => {
 
 
 

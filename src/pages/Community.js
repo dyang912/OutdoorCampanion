@@ -3,7 +3,6 @@ import {Feed} from "../components/posts";
 import {Filter} from "../components/filter";
 
 function Community({ posts, UName }) {
-    console.log(posts);
     const [category, setCategory] = useState("")
 
     const handleSelect=(e)=>{

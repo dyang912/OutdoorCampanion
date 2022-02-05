@@ -38,7 +38,6 @@ function App() {
             fetch_messages().then(value => {
                 setMessages(value)
             })
-            console.log(messages)
 
         })
 
@@ -57,7 +56,7 @@ function App() {
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
-                //<Route path="/chat" element={<Chat messages={messages}/>} />
+                <Route path="/chat" element={<Chat messages={messages}/>} />
                 <Route path="/share" element={<Share UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
