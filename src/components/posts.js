@@ -6,6 +6,7 @@ import * as FaIcons from "react-icons/fa";
 import * as ImIcons from "react-icons/im";
 import {Link, useLocation} from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import {addToGroupChat} from "../database/posts";
 
 
 export const Feed = ({ posts, category, UName }) => {
@@ -17,6 +18,7 @@ export const Feed = ({ posts, category, UName }) => {
         </div>
     );
 }
+
 
 const Post = ({ post, handleClick, UName }) => {
     const [selected, setSelected] = useState(false);
@@ -69,6 +71,9 @@ const Post = ({ post, handleClick, UName }) => {
 
     const [commentOpen, setOpen] = useState(false);
 
+    const joinEvent = () => {
+        addToGroupChat(post.postKey)
+    }
     return (
         <Card className="m-2"
         >
@@ -98,7 +103,8 @@ const Post = ({ post, handleClick, UName }) => {
                 }
                 <Card.Text>{post.creator + " " + new Date(post.time).toLocaleString()}</Card.Text>
                 {selected ? <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>close comments</button> : <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>{!post.comments ? 0 : Object.keys(post.comments).length} comment(s)</button>}
-            </Card.Body>
+                <button type="button" className="btn btn-secondary" onClick={() => joinEvent()}>Join</button>
+                </Card.Body> 
             {selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
 

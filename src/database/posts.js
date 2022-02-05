@@ -4,13 +4,21 @@ import {db} from "./firebase";
 import { getAuth } from "firebase/auth";
 import {getRandomInt} from "./utils";
 
-const uid = getAuth().currentUser ? getAuth.currentUser.uid : "";
+
+const { uid, photoURL } = getAuth().currentUser
+
+export function addToGroupChat(postKey) {
+    set(ref(db, 'groupchats/' + postKey + "/members/"), {
+         [uid] : {"position": "Member"},
+    }).catch((error) => {
+        console.log(error);
+    });
+};
 
 function finishPosting(writtentext, userName, category, navigate,url){
 const postkey = getRandomInt();
-console.log(uid)
 set(ref(db, 'groupchats/' + postkey), {
-    members: {uid: {"position": "Creator"}},
+    members: {[uid] : {"position": "Creator"}},
 }).catch((error) => {
     console.log(error);
 });
