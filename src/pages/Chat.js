@@ -44,12 +44,14 @@ function Chat(messages) {
 
     const { uid, photoURL } = auth.currentUser;
 
-    await set(ref(db, 'messages/' + getRandomInt()), {
+    const messageid = getRandomInt();
+
+    await set(ref(db, 'messages/' + messageid), {
       text: formValue,
-      createdAt: getRandomInt(),
+      createdAt: Date.now(),
       uid,
       photoURL,
-      id: getRandomInt()
+      id: messageid
     }).then(() => {
         alert("post success!")
     }).catch((error) => {
