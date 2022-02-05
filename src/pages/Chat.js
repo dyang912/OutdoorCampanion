@@ -61,7 +61,7 @@ function Chat(messages) {
   }
 
   return (<div>
-    <main>
+    <main >
 
       {messages.messages ? Object.values(messages.messages).map(msg => <ChatMessage key={msg.id} text={msg.text} uid={msg.uid} photoURL={msg.photoURL} />) : null}
 
@@ -69,11 +69,11 @@ function Chat(messages) {
 
     </main>
 
-    <form onSubmit={sendMessage}>
+    <form onSubmit={sendMessage} className="formmessages">
 
-      <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Message" />
+      <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Message" className="inputmessages"/>
 
-      <button type="submit" disabled={!formValue}>Send</button>
+      <button type="submit" disabled={!formValue} className="buttonmessages">Send</button>
 
     </form>
   </div>)

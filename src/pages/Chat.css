@@ -3,7 +3,6 @@
 main {
   padding: 10px;
   height: 80vh;
-  margin: 10vh 0 10vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -21,10 +20,10 @@ main::-webkit-scrollbar-thumb {
   background: #6649b8;
 }
 
-form {
+.formmessages {
   height: 10vh;
   position: fixed;
-  bottom: 100px;
+  bottom: 70px;
   background-color: rgb(0, 23, 23);
   width: 100%;
   max-width: 1440px;
@@ -32,24 +31,24 @@ form {
   font-size: 1.5rem;
 }
 
-form button {
+.formmessages button {
   width: 20%;
   background-color: rgb(56, 56, 143);
 }
 
 
-input {
+.inputmessages {
   line-height: 1.5;
   width: 100%;
   font-size: 1.5rem;
-  background: rgb(58, 58, 58);
+  background: rgb(200, 200, 200);
   color: white;
   outline: none;
   border: none;
   padding: 0 10px;
 }
 
-button {
+.buttonmessages {
   background-color: #282c34; /* Green */
   border: none;
   color: white;
@@ -61,7 +60,7 @@ button {
   font-size: 1.25rem;
 }
 
-button:disabled {
+.formmessages button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -105,7 +104,14 @@ p {
   color: black;
 }
 
-img {
+.sent img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 2px 5px;
+}
+
+.received img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
