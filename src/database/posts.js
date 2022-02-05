@@ -1,11 +1,18 @@
 import {child, get, orderByChild, ref, set, remove, update} from "firebase/database";
 import {getStorage, ref as reference, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {db} from "./firebase";
+import { getAuth } from "firebase/auth";
 import {getRandomInt} from "./utils";
 import { current } from "immer";
 
 function finishPosting(writtentext, UName, UEmail, category, navigate, url, time, address){
   const postkey = getRandomInt();
+    const uid = getAuth().currentUser ? getAuth.currentUser.uid : "";
+    set(ref(db, 'groupchats/' + postkey), {
+        members: {uid: {"position": "Creator"}},
+    }).catch((error) => {
+        console.log(error);
+    });
   set(ref(db, 'posts/' + postkey), {
       text: writtentext,
       time: Date.now(),
