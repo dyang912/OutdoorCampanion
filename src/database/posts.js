@@ -8,8 +8,8 @@ import {getRandomInt} from "./utils";
 const { uid, photoURL } = getAuth().currentUser
 
 export function addToGroupChat(postKey) {
-    set(ref(db, 'groupchats/' + postKey + "/members/"), {
-         [uid] : {"position": "Member"},
+    set(ref(db, 'groupchats/' + postKey + "/members/" + [uid]), {
+         "position": "Member",
     }).catch((error) => {
         console.log(error);
     });
