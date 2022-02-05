@@ -5,11 +5,19 @@ import { getAuth } from "firebase/auth";
 import {getRandomInt} from "./utils";
 import { current } from "immer";
 
+export function addToGroupChat(postKey) {
+    set(ref(db, 'groupchats/' + postKey + "/members/"), {
+        [uid] : {"position": "Member"},
+    }).catch((error) => {
+        console.log(error);
+    });
+};
+
 function finishPosting(writtentext, UName, UEmail, category, navigate, url, time, address){
   const postkey = getRandomInt();
-    const uid = getAuth().currentUser ? getAuth.currentUser.uid : "";
+    const { uid, photoURL } = getAuth().currentUser
     set(ref(db, 'groupchats/' + postkey), {
-        members: {uid: {"position": "Creator"}},
+        members: {[uid] : {"position": "Creator"}},
     }).catch((error) => {
         console.log(error);
     });
@@ -125,14 +133,14 @@ export async function like_post(postKey, UEmail){
     }).catch((error) => {
         console.log(error);
     });
-    var poster = ""; 
+    var poster = "";
     var like_path = "";
     var current_likes = 0;
     get(ref(db, 'posts/' + postKey)).then((snapshot) => {
         poster = snapshot.val().creatorEmail;
-        poster = poster.replaceAll(".", "_");  
-        like_path = 'users/' + poster; 
-        console.log(like_path);  
+        poster = poster.replaceAll(".", "_");
+        like_path = 'users/' + poster;
+        console.log(like_path);
     }).then(() => get(ref(db, like_path)).then((snapshot) => {
         console.log(like_path);
         console.log(snapshot.val());
@@ -141,7 +149,7 @@ export async function like_post(postKey, UEmail){
         }
         else{
             current_likes = 1 ;
-        }       
+        }
     })).then(() => update(ref(db, like_path), {
         likes: current_likes,
     })).then(() => {
@@ -163,18 +171,18 @@ export async function unlike_post(postKey, UEmail){
     }).catch((error) => {
         console.log(error);
     });
-    var poster = ""; 
+    var poster = "";
     var like_path = "";
     var current_likes = 0;
     get(ref(db, 'posts/' + postKey)).then((snapshot) => {
         poster = snapshot.val().creatorEmail;
-        poster = poster.replaceAll(".", "_");  
-        like_path = 'users/' + poster; 
-        console.log(like_path);  
+        poster = poster.replaceAll(".", "_");
+        like_path = 'users/' + poster;
+        console.log(like_path);
     }).then(() => get(ref(db), like_path).then((snapshot) => {
         if (snapshot.val().likes != null){
             current_likes = snapshot.val().likes -1;
-        }      
+        }
     })).then(() => update(ref(db, like_path), {
         likes: current_likes,
     })).then(() => {
