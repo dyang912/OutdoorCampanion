@@ -104,17 +104,12 @@ p {
   color: black;
 }
 
-<<<<<<< HEAD
 .sent img {
-=======
-img {
->>>>>>> f652d29 (changed to realtime database)
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin: 2px 5px;
 }
-<<<<<<< HEAD
 
 .received img {
   width: 40px;
@@ -122,5 +117,3 @@ img {
   border-radius: 50%;
   margin: 2px 5px;
 }
-=======
->>>>>>> f652d29 (changed to realtime database)

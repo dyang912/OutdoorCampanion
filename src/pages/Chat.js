@@ -36,19 +36,10 @@ function Chat(messages) {
   const dummy = useRef();
   //const messagesRef = collection(db, "messages");
 
-<<<<<<< HEAD
-=======
-  console.log(messages);
->>>>>>> f652d29 (changed to realtime database)
 
 
   const [formValue, setFormValue] = useState('');
 
-<<<<<<< HEAD
-=======
-  const [formValue, setFormValue] = useState('');
-
->>>>>>> f652d29 (changed to realtime database)
   async function sendMessage(){
 
     const { uid, photoURL } = auth.currentUser;
@@ -70,19 +61,13 @@ function Chat(messages) {
   }
 
   return (<div>
-<<<<<<< HEAD
     <main >
 
       {messages.messages ? Object.values(messages.messages).map(msg => <ChatMessage key={msg.id} text={msg.text} uid={msg.uid} photoURL={msg.photoURL} />) : null}
-=======
-    <div>
-
-      {Object.values(messages).map(msg => <ChatMessage key={msg.id} text={msg.text} uid={msg.uid} photoURL={msg.photoURL} />)}
->>>>>>> f652d29 (changed to realtime database)
 
       <span ref={dummy}></span>
 
-    </div>
+    </main>
 
     <form onSubmit={sendMessage} className="formmessages">
 
@@ -95,11 +80,7 @@ function Chat(messages) {
 }
 
 
-<<<<<<< HEAD
-const ChatMessage = ({text, uid, photoURL }) => {
-=======
 const ChatMessage = ({ key, text, uid, photoURL }) => {
->>>>>>> f652d29 (changed to realtime database)
 
 
 

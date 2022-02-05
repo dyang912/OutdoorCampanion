@@ -38,10 +38,6 @@ function App() {
             fetch_messages().then(value => {
                 setMessages(value)
             })
-<<<<<<< HEAD
-=======
-            console.log(messages)
->>>>>>> f652d29 (changed to realtime database)
 
         })
 
@@ -60,11 +56,7 @@ function App() {
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
-<<<<<<< HEAD
                 <Route path="/chat" element={<Chat messages={messages}/>} />
-=======
-                //<Route path="/chat" element={<Chat messages={messages}/>} />
->>>>>>> f652d29 (changed to realtime database)
                 <Route path="/share" element={<Share UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
