@@ -50,13 +50,16 @@ function App() {
             </div>
 
             <Routes>
-                <Route path="/" element={<Community posts={posts} UName = {UName}/>} />
+                <Route path="/" element={<Community posts={posts} UName={UName} UEmail={UEmail}/>} />
                 <Route path="/login" element={<Login user={user} UEmail={UEmail} UName={UName}
                                                      setUEmail={setUEmail} setUName={setUName}
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
+
+                <Route path="/newpost" element={<NewPost user={user} UName={UName} UEmail={UEmail}/>} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
                 <Route path="/chat" element={<Chat messages={messages}/>} />
+
                 <Route path="/share" element={<Share UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />
             </Routes>

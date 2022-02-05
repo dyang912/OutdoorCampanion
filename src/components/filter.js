@@ -13,7 +13,7 @@ export function Filter({ handleSelect }) {
                 <Dropdown.Item eventKey="event">Event</Dropdown.Item>
                 <Dropdown.Item eventKey="question">Question</Dropdown.Item>
                 <Dropdown.Item eventKey="promotion">Promotion</Dropdown.Item>
-                <Dropdown.Item eventKey="miscellaneous">Miscellaneous</Dropdown.Item>
+                <Dropdown.Item eventKey="miscellaneous">Experience</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     );

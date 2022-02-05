@@ -1,17 +1,20 @@
-import {child, get, orderByChild, ref, set} from "firebase/database";
+import {child, get, orderByChild, ref, set, remove} from "firebase/database";
 import {getStorage, ref as reference, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {db} from "./firebase";
 import {getRandomInt} from "./utils";
 
-function finishPosting(writtentext, userName, category, navigate,url){
+function finishPosting(writtentext, UName, UEmail, category, navigate, url, time, address){
   const postkey = getRandomInt();
   set(ref(db, 'posts/' + postkey), {
       text: writtentext,
       time: Date.now(),
       postKey: postkey,
-      creator: userName,
+      creator: UName,
+      creatorEmail: UEmail,
       category: category,
       image: url,
+      heldTime: time.toString(),
+      address: address
   }).then(() => {
       alert("post success!")
       navigate('/')
@@ -20,7 +23,7 @@ function finishPosting(writtentext, userName, category, navigate,url){
   });
 }
 
-export async function make_post(writtentext, userName, category, navigate, file) {
+export async function make_post(writtentext, UName, UEmail, category, navigate, file, time, address) {
     if (file) {
         const storage = getStorage();
 
@@ -72,12 +75,12 @@ export async function make_post(writtentext, userName, category, navigate, file)
 
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     console.log('File available at', downloadURL);
-                    finishPosting(writtentext, userName, category, navigate, downloadURL);
+                    finishPosting(writtentext, UName, UEmail, category, navigate, downloadURL, time, address);
                 });
             }
         );
     } else {
-        finishPosting(writtentext, userName, category, navigate, "");
+        finishPosting(writtentext, UName, UEmail, category, navigate, "", time, address);
     }
 }
 
@@ -91,6 +94,54 @@ export async function fetch_posts() {
             postArray.sort((a, b) => b.time - a.time);
             return postArray;
         }
+    }).catch((error) => {
+        console.error(error);
+    });
+}
+
+export async function delete_post(postkey){
+    remove(ref(db, 'posts/' + postkey)).then(() => {
+        alert("delete success!")
+    }).catch((error) => {
+        console.log(error);
+    });
+}
+
+export async function like_post(postKey, UEmail){
+    const user= UEmail.replace(".", "_");
+    const path = 'posts/' + postKey + '/likes/' + user;
+    set(ref(db, path), {
+        user: UEmail,
+    }).then(() => {
+        alert("like success!")
+    }).catch((error) => {
+        console.log(error);
+    });
+
+}
+
+export async function unlike_post(postKey, UEmail){
+    const user= UEmail.replace(".", "_");
+    const path = 'posts/' + postKey + '/likes/' + user;
+    remove(ref(db, path), {
+        user: UEmail,
+    }).then(() => {
+        alert("unlike success!")
+    }).catch((error) => {
+        console.log(error);
+    });
+
+}
+
+export async function check_if_liked(postKey, UEmail, setLiked) {
+    const user= UEmail.replace(".", "_");
+    const path = 'posts/' + postKey + '/likes/';
+    return await get(ref(db, path)).then((snapshot) => {
+        snapshot.forEach((val) => {
+            if (val.val().user == UEmail){
+                setLiked(true);
+             }
+        });
     }).catch((error) => {
         console.error(error);
     });

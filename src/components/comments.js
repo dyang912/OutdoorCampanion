@@ -54,9 +54,7 @@ export function Comments({ postKey, UName }) {
         <form onSubmit={pressSubmit} className="form-inline">
             <PostedComment comments={comments} className="ll"/>
             <div className="ms-2">
-                <textarea value={txt} onChange={(e) => {
-                    setTxt(e.target.value);
-                }} ></textarea>
+                <textarea value={txt} onChange={(e) => {setTxt(e.target.value);}} />
             </div>
             <Button style={{background: "#8d9db6", border: "none"}} className="ms-2" type="submit" >submit</Button>
         </form>

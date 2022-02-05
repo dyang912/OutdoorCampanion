@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Feed} from "../components/posts";
 import {Filter} from "../components/filter";
 
-function Community({ posts, UName }) {
+function Community({ posts, UName, UEmail }) {
     const [category, setCategory] = useState("")
 
     const handleSelect=(e)=>{
@@ -12,7 +12,7 @@ function Community({ posts, UName }) {
     return (
         <div>
             <Filter handleSelect={handleSelect}/>
-            <Feed posts={posts} category={category} UName = {UName}/>
+            <Feed posts={posts} category={category} UName={UName} UEmail={UEmail}/>
         </div>
     );
 }

@@ -1,25 +1,29 @@
 import React, {useState} from "react";
-import {Card, Image, Dropdown} from "react-bootstrap";
+import {Card, Image} from "react-bootstrap";
 import {Comments} from "./comments";
 import {isMobile} from 'react-device-detect';
 import * as FaIcons from "react-icons/fa";
 import * as ImIcons from "react-icons/im";
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
+import {delete_post,like_post, unlike_post,check_if_liked} from "../database/posts";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+//import { check } from "prettier";
 
 
-export const Feed = ({ posts, category, UName }) => {
+export const Feed = ({ posts, category, UName, UEmail }) => {
     return (
         <div className="feed">
             { posts ? Object.values(posts).filter(post => category === "" || post.category === category).map( post =>
-                <Post key={post.postKey} post={post} UName = {UName}  />) : null
+                <Post key={post.postKey} post={post} UName={UName} UEmail={UEmail} />) : null
             }
         </div>
     );
 }
 
-const Post = ({ post, handleClick, UName }) => {
+const Post = ({ post, UName, UEmail }) => {
     const [selected, setSelected] = useState(false);
+    const [liked, setLiked] = useState(false);
+    check_if_liked(post.postKey, UEmail, setLiked);
     const categoryfn = () =>{
         if (post.category === 'event'){
             return <div className="alert alert-primary" style={{display: 'flex'}}>Event <FaIcons.FaHiking />
@@ -67,11 +71,8 @@ const Post = ({ post, handleClick, UName }) => {
         }
     }
 
-    const [commentOpen, setOpen] = useState(false);
-
     return (
-        <Card className="m-2"
-        >
+        <Card className="m-2">
             <Card.Body>
                 {categoryfn()}
                 {/*<Dropdown>*/}
@@ -86,7 +87,7 @@ const Post = ({ post, handleClick, UName }) => {
                 {/*    </Dropdown.Menu>*/}
                 {/*</Dropdown>*/}
                 <Card.Title>{ post.text }</Card.Title>
-                { post.image?
+                { post.image ?
                      isMobile ?(
                          <div style={{width: 100+'%', height: 100+'%'}}>
                         <Image src={post.image} alt="postImage" fluid={true} style={{width: 80+'%'}}/>
@@ -96,10 +97,35 @@ const Post = ({ post, handleClick, UName }) => {
                          </div>)
                     : null
                 }
-                <Card.Text>{post.creator + " " + new Date(post.time).toLocaleString()}</Card.Text>
-                {selected ? <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>close comments</button> : <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>{!post.comments ? 0 : Object.keys(post.comments).length} comment(s)</button>}
+                { post.heldTime ? <Card.Text>{"Time: " + post.heldTime}</Card.Text> : null }
+                { post.address ? <Card.Text> {"Location: " + post.address}</Card.Text> : null }
+                <Card.Text><small className="text-muted">{post.creator + " " + new Date(post.time).toLocaleString()}</small></Card.Text>
+                { selected ?
+                    <button type="button" className="btn btn-secondary" onClick={() => setSelected(false)}>
+                        close comments
+                    </button> :
+                    <button type="button" className="btn btn-outline-dark" onClick={() => setSelected(true)}>
+                        {!post.comments ? 0 : Object.keys(post.comments).length} comment(s)
+                    </button>
+                }
+                { liked?
+                    <button type="button" className="bi bi-heart-fill" onClick={() => {setLiked(false); unlike_post(post.postKey, UEmail)}}>
+                    {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
+                    </button> :
+                    <button type="button" className="bi bi-heart" onClick={() => {setLiked(true); like_post(post.postKey,UEmail)}}>
+                    {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
+                    </button>
+                }
+                { UEmail===post.creatorEmail ? <button type="button" className="btn btn-outline-dark ms-2"
+                                                 onClick={() => delete_post(post.postKey)}>
+                                            delete
+                                         </button> : null}
+                
+                
+                            
             </Card.Body>
-            {selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
+            
+            { selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
 
     );
