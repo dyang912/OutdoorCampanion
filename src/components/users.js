@@ -1,12 +1,15 @@
-import {signInWithGoogle, signOut} from "../database/users";
+import {signInWithGoogle, signOut, make_user} from "../database/users";
+import React, {useState} from "react";
+
+
 
 export const SignInButton = ({ setUID, setUName, setUPhotoUrl }) => (
     <div className="d-grid gap-3 col-3 mx-auto p-2">
     <button type="button" className="btn btn-outline-dark" onClick={ () => {
         signInWithGoogle().then(([email, name, photoUrl]) => {
-            setUID(email);
             setUName(name);
             setUPhotoUrl(photoUrl);
+            make_user(name, email);
         })
     }} >Login</button></div>
 )

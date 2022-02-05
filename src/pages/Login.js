@@ -1,7 +1,19 @@
 import React from "react";
 import {SignInButton, SignOutButton} from "../components/users";
+import {check_user_likes} from "../database/users";
+import {useState} from "react";
 
 function Login({ user, UEmail, setUEmail, UName, setUName, UPhotoUrl, setUPhotoUrl}) {
+    const [totalLikes, setTotalLikes] = useState(0);
+
+   check_user_likes(UEmail, setTotalLikes);
+    
+    
+    // .then(value => {
+    //     console.log(value);
+    //     setTotalLikes(value);
+    // });
+
     return (
         <div>
             { user ? null : <p className = "login-header">Login to unlock the outdoors!</p> }
@@ -14,6 +26,8 @@ function Login({ user, UEmail, setUEmail, UName, setUName, UPhotoUrl, setUPhotoU
                 <div className="col">
                     {user? <div>Your Name: {UName ? UName : "NULL"}</div> : null}
                     {user? <div>Your email: {UEmail ? UEmail : "NULL"}</div> : null}
+                    {user? <div> Total likes: {totalLikes} </div> :null}
+                    
                 </div>
             </div>
         </div>

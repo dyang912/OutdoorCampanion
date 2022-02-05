@@ -1,7 +1,8 @@
-import {child, get, orderByChild, ref, set, remove} from "firebase/database";
+import {child, get, orderByChild, ref, set, remove, update} from "firebase/database";
 import {getStorage, ref as reference, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {db} from "./firebase";
 import {getRandomInt} from "./utils";
+import { current } from "immer";
 
 function finishPosting(writtentext, UName, UEmail, category, navigate, url, time, address){
   const postkey = getRandomInt();
@@ -108,20 +109,45 @@ export async function delete_post(postkey){
 }
 
 export async function like_post(postKey, UEmail){
-    const user= UEmail.replace(".", "_");
-    const path = 'posts/' + postKey + '/likes/' + user;
-    set(ref(db, path), {
+    const user= UEmail.replaceAll(".", "_");
+    const post_path = 'posts/' + postKey + '/likes/' + user;
+    set(ref(db, post_path), {
         user: UEmail,
     }).then(() => {
         alert("like success!")
     }).catch((error) => {
         console.log(error);
     });
+    var poster = ""; 
+    var like_path = "";
+    var current_likes = 0;
+    get(ref(db, 'posts/' + postKey)).then((snapshot) => {
+        poster = snapshot.val().creatorEmail;
+        poster = poster.replaceAll(".", "_");  
+        like_path = 'users/' + poster; 
+        console.log(like_path);  
+    }).then(() => get(ref(db, like_path)).then((snapshot) => {
+        console.log(like_path);
+        console.log(snapshot.val());
+        if (snapshot.val().likes != null){
+            current_likes = snapshot.val().likes +1;
+        }
+        else{
+            current_likes = 1 ;
+        }       
+    })).then(() => update(ref(db, like_path), {
+        likes: current_likes,
+    })).then(() => {
+        alert("like success!")
+    }).catch((error) => {
+        console.log(error);
+    });
+
 
 }
 
 export async function unlike_post(postKey, UEmail){
-    const user= UEmail.replace(".", "_");
+    const user= UEmail.replaceAll(".", "_");
     const path = 'posts/' + postKey + '/likes/' + user;
     remove(ref(db, path), {
         user: UEmail,
@@ -130,11 +156,31 @@ export async function unlike_post(postKey, UEmail){
     }).catch((error) => {
         console.log(error);
     });
+    var poster = ""; 
+    var like_path = "";
+    var current_likes = 0;
+    get(ref(db, 'posts/' + postKey)).then((snapshot) => {
+        poster = snapshot.val().creatorEmail;
+        poster = poster.replaceAll(".", "_");  
+        like_path = 'users/' + poster; 
+        console.log(like_path);  
+    }).then(() => get(ref(db), like_path).then((snapshot) => {
+        if (snapshot.val().likes != null){
+            current_likes = snapshot.val().likes -1;
+        }      
+    })).then(() => update(ref(db, like_path), {
+        likes: current_likes,
+    })).then(() => {
+        alert("unlike success!")
+    }).catch((error) => {
+        console.log(error);
+    });
+
 
 }
 
 export async function check_if_liked(postKey, UEmail, setLiked) {
-    const user= UEmail.replace(".", "_");
+    const user= UEmail.replaceAll(".", "_");
     const path = 'posts/' + postKey + '/likes/';
     return await get(ref(db, path)).then((snapshot) => {
         snapshot.forEach((val) => {
