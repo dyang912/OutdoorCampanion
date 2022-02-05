@@ -24,6 +24,13 @@ function NavigationBar() {
                     </Link>
                 </li>
                 <li className = "nav-item mx-5">
+                    <Link to={"/chat"} className= "nav-link">
+                        { location.pathname === "/chat" ?
+                            <i className="bi bi-chat-dots-fill" style={{fontSize:"25px", color: "#667292", border: "none"}}/> :
+                            <i className="bi bi-chat" style={{fontSize:"25px", color: "#667292", border: "none"}}/> }
+                    </Link>
+                </li>
+                <li className = "nav-item mx-5">
                     <Link to={"/login"} className= "nav-link">
                         { location.pathname === "/login" ?
                             <i className="bi bi-person-fill" style={{fontSize:"25px", color: "#667292", border: "none"}}/> :
