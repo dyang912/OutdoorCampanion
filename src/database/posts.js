@@ -6,8 +6,8 @@ import {getRandomInt} from "./utils";
 import { current } from "immer";
 
 export function addToGroupChat(postKey) {
-    set(ref(db, 'groupchats/' + postKey + "/members/"), {
-        [uid] : {"position": "Member"},
+    set(ref(db, 'groupchats/' + postKey + "/members/" + [uid]), {
+        "position": "Member",
     }).catch((error) => {
         console.log(error);
     });
