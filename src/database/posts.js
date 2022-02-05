@@ -1,10 +1,19 @@
 import {child, get, orderByChild, ref, set} from "firebase/database";
 import {getStorage, ref as reference, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {db} from "./firebase";
+import { getAuth } from "firebase/auth";
 import {getRandomInt} from "./utils";
 
+const uid = getAuth().currentUser ? getAuth.currentUser.uid : "";
+
 function finishPosting(writtentext, userName, category, navigate,url){
-  const postkey = getRandomInt();
+const postkey = getRandomInt();
+console.log(uid)
+set(ref(db, 'groupchats/' + postkey), {
+    members: {uid: {"position": "Creator"}},
+}).catch((error) => {
+    console.log(error);
+});
   set(ref(db, 'posts/' + postkey), {
       text: writtentext,
       time: Date.now(),
@@ -18,6 +27,8 @@ function finishPosting(writtentext, userName, category, navigate,url){
   }).catch((error) => {
       console.log(error);
   });
+  
+
 }
 
 export async function make_post(writtentext, userName, category, navigate, file) {
