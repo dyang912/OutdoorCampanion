@@ -3,49 +3,46 @@ import {firebase, db} from "../database/firebase";
 import { child, get, orderByChild, ref, set, getDatabase, onValue } from "firebase/database";
 import { getFirestore, collection, query, orderBy, limit, serverTimestamp, setDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 const auth = getAuth();
 
 async function findText(id){
   const post = ref(getDatabase(firebase), "/posts/"+id+"");
-  onValue(post, (snap) => {
-    console.log({ id:snap.val().postKey, text:snap.val().text})
-;    return { id:snap.val().postKey, text:snap.val().text};
+  let object = {};
+  await onValue(post, (snap) => {
+    console.log({ id:snap.val().postKey, text:snap.val().text});
+    object = { id:snap.val().postKey, text:snap.val().text};
   })
+  console.log("mark",object);
+  return (object);
 }
 
 export async function findGroupchats() {
+
   const groupchatsdb = ref(getDatabase(firebase), "/groupchats");
-  onValue(groupchatsdb, (snap) => {
+  let objects = [];
+  await onValue(groupchatsdb, (snap) => {
     let groupchats = [];
     let groupchattexts = [];
      snap.forEach(function(childNodes){
-
-
-        //This loop iterates over children of user_id
-        //childNodes.key is key of the children of userid such as (20170710)
-        let members = childNodes.val().members;
+       let members = childNodes.val().members;
         Object.keys(members).forEach(uid =>{
           if (uid === auth.currentUser.uid){
             groupchats.push(childNodes.key);
           }
         })
 
-        /*members.forEach(function(children){
-          console.log(children.key);
-        })*/
-        //childNodes.val().time;
-        //childNodes.val().rest_time;
-        //childNodes.val().interval_time;
-
-
     });
+    console.log("groupchats",groupchats)
     groupchats.forEach(id => {
-        groupchattexts.push(findText(id));
+        console.log("id",id);
+        findText(id).then((value) => groupchattexts.push(value));
     });
-    console.log(groupchattexts);
-    return groupchattexts;
+    console.log("groupchattexts",groupchattexts);
+    objects = groupchattexts;
   });
+  return objects;
 }
 
 
@@ -57,13 +54,14 @@ const Groupchat = ({ groupchat }) => (
 );
 
 const GroupchatList = ( {groupchats} ) => (
+
   <div>
-    { groupchats.groupchats ? groupchats.groupchats.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat } />)  :null }
+    { groupchats.messages ? groupchats.messages.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat } />)  :null }
   </div>
 );
 
 function Groupchats(groupchats){
-
+  console.log(groupchats);
   return (
     <div>
     <GroupchatList groupchats={groupchats} />

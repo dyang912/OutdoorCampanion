@@ -39,7 +39,9 @@ function App() {
         const messagesdb = ref(getDatabase(firebase), "/messages");
         onValue(messagesdb, () => {
             fetch_messages().then(value => {
+              //console.log(value);
                 setMessages(value);
+                //console.log(messages);
 
             })
 
@@ -47,7 +49,9 @@ function App() {
         const groupchatsdb = ref(getDatabase(firebase), "/groupchats");
         onValue(groupchatsdb, () => {
             findGroupchats().then(value => {
+                console.log(value);
                 setdbgroupchats(value);
+              //  console.log(dbgroupchats);
 
             })
 
