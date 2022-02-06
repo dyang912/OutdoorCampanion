@@ -3,12 +3,14 @@ import {useEffect, useState} from 'react';
 import {firebase} from "./database/firebase";
 import {fetch_posts} from "./database/posts.js";
 import {fetch_messages} from "./pages/Chat.js";
+import {findGroupchats} from "./pages/Groupchat.js";
 import {useUserState} from "./database/users";
 import {onValue, getDatabase, ref} from "firebase/database"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import Community from "./pages/Community";
 import Chat from "./pages/Chat";
+import Groupchats from "./pages/Groupchat.js";
 import Login from "./pages/Login";
 import NewPost from "./pages/NewPost";
 import NavigationBar from "./components/navigationBar";
@@ -23,20 +25,30 @@ function App() {
     const [user] = useUserState({setUEmail, setUName, setUPhotoUrl});
     const [posts, setPost] = useState();
     const [messages, setMessages] = useState();
+    const [dbgroupchats, setdbgroupchats] = useState();
 
 
     useEffect(() => {
         const db = ref(getDatabase(firebase), "/posts");
         onValue(db, () => {
             fetch_posts().then(value => {
-                setPost(value)
+                setPost(value);
             })
 
         })
         const messagesdb = ref(getDatabase(firebase), "/messages");
         onValue(messagesdb, () => {
             fetch_messages().then(value => {
-                setMessages(value)
+                setMessages(value);
+
+            })
+
+        })
+        const groupchatsdb = ref(getDatabase(firebase), "/groupchats");
+        onValue(groupchatsdb, () => {
+            findGroupchats().then(value => {
+                setdbgroupchats(value);
+
             })
 
         })
@@ -59,6 +71,7 @@ function App() {
                 <Route path="/newpost" element={<NewPost user={user} UName={UName} UEmail={UEmail}/>} />
                 <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
                 <Route path="/chat" element={<Chat messages={messages}/>} />
+                <Route path="/groupchats" element={<Groupchats messages={dbgroupchats}/>} />
 
                 <Route path="/share" element={<Share UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />
