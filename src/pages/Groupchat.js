@@ -3,7 +3,7 @@ import {firebase, db} from "../database/firebase";
 import { child, get, orderByChild, ref, set, getDatabase, onValue } from "firebase/database";
 import { getFirestore, collection, query, orderBy, limit, serverTimestamp, setDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 const auth = getAuth();
 
@@ -48,15 +48,18 @@ export async function findGroupchats() {
 
 
 const Groupchat = ({ groupchat }) => (
-  <div>
-    it worked {groupchat.text}
-  </div>
+  <Link to={"/chat"} className= "nav-link">
+      <div>
+        it worked {groupchat.text}
+      </div>
+  </Link>
+
 );
 
 const GroupchatList = ( {groupchats} ) => (
 
   <div>
-    { groupchats.messages ? groupchats.messages.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat } />)  :null }
+    { groupchats.messages ? groupchats.messages.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat }  />)  :null }
   </div>
 );
 
