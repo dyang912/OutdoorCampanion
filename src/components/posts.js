@@ -7,21 +7,20 @@ import * as ImIcons from "react-icons/im";
 import {Link} from "react-router-dom";
 import {delete_post,like_post, unlike_post,check_if_liked} from "../database/posts";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-//import { check } from "prettier";
 import {addToGroupChat} from "../database/posts";
 
 
-export const Feed = ({ posts, category, UName, UEmail }) => {
+export const Feed = ({ posts, category, UName, UEmail, uid }) => {
     return (
         <div className="feed">
             { posts ? Object.values(posts).filter(post => category === "" || post.category === category).map( post =>
-                <Post key={post.postKey} post={post} UName={UName} UEmail={UEmail} />) : null
+                <Post key={post.postKey} post={post} UName={UName} UEmail={UEmail} uid={uid}/>) : null
             }
         </div>
     );
 }
 
-const Post = ({ post, UName, UEmail }) => {
+const Post = ({ post, UName, UEmail, uid }) => {
     const [selected, setSelected] = useState(false);
     const [liked, setLiked] = useState(false);
     check_if_liked(post.postKey, UEmail, setLiked);
@@ -73,24 +72,13 @@ const Post = ({ post, UName, UEmail }) => {
     }
 
     const joinEvent = () => {
-        addToGroupChat(post.postKey)
+        addToGroupChat(post.postKey, uid)
     }
 
     return (
         <Card className="m-2">
             <Card.Body>
                 {categoryfn()}
-                {/*<Dropdown>*/}
-                {/*    <Dropdown.Toggle variant="success" id="dropdown-basic">*/}
-                {/*        Dropdown Button*/}
-                {/*    </Dropdown.Toggle>*/}
-
-                {/*    <Dropdown.Menu>*/}
-                {/*        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>*/}
-                {/*        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>*/}
-                {/*        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>*/}
-                {/*    </Dropdown.Menu>*/}
-                {/*</Dropdown>*/}
                 <Card.Title>{ post.text }</Card.Title>
                 { post.image ?
                      isMobile ?(
@@ -115,21 +103,19 @@ const Post = ({ post, UName, UEmail }) => {
                 }
                 { liked?
                     <button type="button" className="bi bi-heart-fill" onClick={() => {setLiked(false); unlike_post(post.postKey, UEmail)}}>
-                    {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
+                        {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
                     </button> :
                     <button type="button" className="bi bi-heart" onClick={() => {setLiked(true); like_post(post.postKey,UEmail)}}>
-                    {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
+                        {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
                     </button>
                 }
                 { UEmail===post.creatorEmail ?
-                    <button type="button" className="btn btn-outline-dark ms-2" onClick={() => delete_post(post.postKey)}>delete</button> :
-                    <button type="button" className="btn btn-secondary" onClick={() => joinEvent()}>Join</button>
+                    <button type="button" className="btn btn-outline-dark" onClick={() => delete_post(post.postKey)}>
+                        delete
+                    </button> : null
                 }
-
-
-
+                { uid ?<button type="button" className="btn btn-secondary" onClick={() => joinEvent()}>Join</button>:null}
             </Card.Body>
-
             { selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>
 

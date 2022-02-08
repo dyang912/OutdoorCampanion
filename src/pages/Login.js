@@ -3,21 +3,15 @@ import {SignInButton, SignOutButton} from "../components/users";
 import {check_user_likes} from "../database/users";
 import {useState} from "react";
 
-function Login({ user, UEmail, setUEmail, UName, setUName, UPhotoUrl, setUPhotoUrl}) {
+function Login({ user, UEmail, setUEmail, UName, setUName, UPhotoUrl, setUPhotoUrl, setUid}) {
     const [totalLikes, setTotalLikes] = useState(0);
 
    check_user_likes(UEmail, setTotalLikes);
-    
-    
-    // .then(value => {
-    //     console.log(value);
-    //     setTotalLikes(value);
-    // });
 
     return (
         <div>
             { user ? null : <p className = "login-header">Login to unlock the outdoors!</p> }
-            { user ? <SignOutButton setUEmail={setUEmail} setUName={setUName} setUPhotoUrl = {setUPhotoUrl}/> :
+            { user ? <SignOutButton setUEmail={setUEmail} setUName={setUName} setUPhotoUrl = {setUPhotoUrl} setUid={setUid}/> :
                       <SignInButton setUEmail={setUEmail} setUName={setUName} setUPhotoUrl = {setUPhotoUrl}/> }
             <div className="row">
                 <div className="col" id ="profile-photo-container">

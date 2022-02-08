@@ -1,27 +1,26 @@
 import {child, get, orderByChild, ref, set, remove, update} from "firebase/database";
 import {getStorage, ref as reference, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {db} from "./firebase";
-import { getAuth } from "firebase/auth";
 import {getRandomInt} from "./utils";
-import { current } from "immer";
 
-export function addToGroupChat(postKey) {
+export function addToGroupChat(postKey, uid) {
     set(ref(db, 'groupchats/' + postKey + "/members/" + [uid]), {
         "position": "Member",
+    }).then(() => {
+        alert("join success!")
     }).catch((error) => {
         console.log(error);
     });
-};
+}
 
-function finishPosting(writtentext, UName, UEmail, category, navigate, url, time, address){
-  const postkey = getRandomInt();
-    const { uid, photoURL } = getAuth().currentUser
+function finishPosting(writtentext, UName, UEmail, category, navigate, url, time, address, uid){
+    const postkey = getRandomInt();
     set(ref(db, 'groupchats/' + postkey), {
         members: {[uid] : {"position": "Creator"}},
     }).catch((error) => {
         console.log(error);
     });
-  set(ref(db, 'posts/' + postkey), {
+    set(ref(db, 'posts/' + postkey), {
       text: writtentext,
       time: Date.now(),
       postKey: postkey,
@@ -31,15 +30,15 @@ function finishPosting(writtentext, UName, UEmail, category, navigate, url, time
       image: url,
       heldTime: time.toString(),
       address: address
-  }).then(() => {
+    }).then(() => {
       alert("post success!")
       navigate('/')
-  }).catch((error) => {
+    }).catch((error) => {
       console.log(error);
-  });
+    });
 }
 
-export async function make_post(writtentext, UName, UEmail, category, navigate, file, time, address) {
+export async function make_post(writtentext, UName, UEmail, category, navigate, file, time, address, uid) {
     if (file) {
         const storage = getStorage();
 
@@ -66,6 +65,8 @@ export async function make_post(writtentext, UName, UEmail, category, navigate, 
                     case 'running':
                         console.log('Upload is running');
                         break;
+                    default:
+                        break
                 }
             },
             (error) => {
@@ -84,6 +85,8 @@ export async function make_post(writtentext, UName, UEmail, category, navigate, 
                     case 'storage/unknown':
                         // Unknown error occurred, inspect error.serverResponse
                         break;
+                    default:
+                        break
                 }
             },
             () => {
@@ -91,12 +94,12 @@ export async function make_post(writtentext, UName, UEmail, category, navigate, 
 
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     console.log('File available at', downloadURL);
-                    finishPosting(writtentext, UName, UEmail, category, navigate, downloadURL, time, address);
+                    finishPosting(writtentext, UName, UEmail, category, navigate, downloadURL, time, address, uid);
                 });
             }
         );
     } else {
-        finishPosting(writtentext, UName, UEmail, category, navigate, "", time, address);
+        finishPosting(writtentext, UName, UEmail, category, navigate, "", time, address, uid);
     }
 }
 
@@ -133,9 +136,9 @@ export async function like_post(postKey, UEmail){
     }).catch((error) => {
         console.log(error);
     });
-    var poster = "";
-    var like_path = "";
-    var current_likes = 0;
+    let poster = "";
+    let like_path = "";
+    let current_likes = 0;
     get(ref(db, 'posts/' + postKey)).then((snapshot) => {
         poster = snapshot.val().creatorEmail;
         poster = poster.replaceAll(".", "_");
@@ -157,8 +160,6 @@ export async function like_post(postKey, UEmail){
     }).catch((error) => {
         console.log(error);
     });
-
-
 }
 
 export async function unlike_post(postKey, UEmail){
@@ -190,16 +191,13 @@ export async function unlike_post(postKey, UEmail){
     }).catch((error) => {
         console.log(error);
     });
-
-
 }
 
 export async function check_if_liked(postKey, UEmail, setLiked) {
-    const user= UEmail.replaceAll(".", "_");
     const path = 'posts/' + postKey + '/likes/';
     return await get(ref(db, path)).then((snapshot) => {
         snapshot.forEach((val) => {
-            if (val.val().user == UEmail){
+            if (val.val().user === UEmail){
                 setLiked(true);
              }
         });

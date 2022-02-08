@@ -19,10 +19,11 @@ import Share from "./components/share"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+    const [uid, setUid] = useState("")
     const [UEmail, setUEmail] = useState("");
     const [UName, setUName] = useState("");
     const [UPhotoUrl, setUPhotoUrl] = useState("");
-    const [user] = useUserState({setUEmail, setUName, setUPhotoUrl});
+    const [user] = useUserState({setUEmail, setUName, setUPhotoUrl, setUid});
     const [posts, setPost] = useState();
     const [messages, setMessages] = useState();
     const [dbgroupchats, setdbgroupchats] = useState();
@@ -66,14 +67,13 @@ function App() {
             </div>
 
             <Routes>
-                <Route path="/" element={<Community posts={posts} UName={UName} UEmail={UEmail}/>} />
+                <Route path="/" element={<Community posts={posts} UName={UName} UEmail={UEmail} uid={uid}/>} />
                 <Route path="/login" element={<Login user={user} UEmail={UEmail} UName={UName}
-                                                     setUEmail={setUEmail} setUName={setUName}
+                                                     setUEmail={setUEmail} setUName={setUName} setUid={setUid}
                                                      UPhotoUrl={UPhotoUrl} setUPhotoUrl={setUPhotoUrl}
                 />} />
 
-                <Route path="/newpost" element={<NewPost user={user} UName={UName} UEmail={UEmail}/>} />
-                <Route path="/newpost" element={<NewPost user={user} UName={UName}/>} />
+                <Route path="/newpost" element={<NewPost user={user} UName={UName} UEmail={UEmail} uid={uid}/>} />
                 <Route path="/chat" element={<Chat messages={messages}/>} />
                 <Route path="/groupchats" element={<Groupchats messages={dbgroupchats}/>} />
 

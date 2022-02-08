@@ -6,7 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import Geocode from "react-geocode";
 import {apikey} from "../env"
 
-function NewPost({ user, UName, UEmail }) {
+function NewPost({ user, UName, UEmail, uid }) {
     const [posttext, makePost] = useState("");
     const [postTime, setTime] = useState(new Date());
     const [postLocation, setLocation] = useState([42.0451, -87.6877]);
@@ -112,7 +112,7 @@ function NewPost({ user, UName, UEmail }) {
                     <button type="button" className="btn btn-outline-dark" onClick={() => {
                         user ? make_post(posttext, UName, UEmail, now, navigate,
                                         document.getElementById("files ").files[0],
-                                        postTime, address) :
+                                        postTime, address, uid) :
                                 (() => {alert("please login!"); navigate('/login');})()
                     }}>Post</button>
                 </div>
