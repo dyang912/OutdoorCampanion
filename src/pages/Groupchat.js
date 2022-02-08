@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {firebase, db} from "../database/firebase";
+import {fetch_messages} from "./Chat";
 import { child, get, orderByChild, ref, set, getDatabase, onValue } from "firebase/database";
 import { getFirestore, collection, query, orderBy, limit, serverTimestamp, setDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -47,8 +48,8 @@ export async function findGroupchats() {
 
 
 
-const Groupchat = ({ groupchat }) => (
-  <Link to={"/chat"} className= "nav-link">
+const Groupchat = ({ groupchat,setMessages }) => (
+  <Link to={"/chat"} className= "nav-link" onClick={() => fetch_messages().then(value => {setMessages(value);})}>
       <div>
         it worked {groupchat.text}
       </div>
@@ -56,18 +57,18 @@ const Groupchat = ({ groupchat }) => (
 
 );
 
-const GroupchatList = ( {groupchats} ) => (
+const GroupchatList = ( {groupchats,setMessages} ) => (
 
   <div>
-    { groupchats.messages ? groupchats.messages.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat }  />)  :null }
+    { groupchats.messages ? groupchats.messages.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat } setMessages={setMessages} />)  :null }
   </div>
 );
 
-function Groupchats(groupchats){
-  console.log(groupchats);
+function Groupchats(groupchats,setMessages){
+  console.log(setMessages);
   return (
     <div>
-    <GroupchatList groupchats={groupchats} />
+    <GroupchatList groupchats={groupchats} setMessages={setMessages}/>
     </div>
   )
 };

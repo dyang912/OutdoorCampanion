@@ -37,16 +37,7 @@ function App() {
             })
 
         })
-        const messagesdb = ref(getDatabase(firebase), "/messages");
-        onValue(messagesdb, () => {
-            fetch_messages().then(value => {
-              //console.log(value);
-                setMessages(value);
-                //console.log(messages);
 
-            })
-
-        })
         const groupchatsdb = ref(getDatabase(firebase), "/groupchats");
         onValue(groupchatsdb, () => {
             findGroupchats().then(value => {
@@ -75,7 +66,7 @@ function App() {
 
                 <Route path="/newpost" element={<NewPost user={user} UName={UName} UEmail={UEmail} uid={uid}/>} />
                 <Route path="/chat" element={<Chat messages={messages}/>} />
-                <Route path="/groupchats" element={<Groupchats messages={dbgroupchats}/>} />
+                <Route path="/groupchats" element={<Groupchats messages={dbgroupchats} setMessages={setMessages}/>} />
 
                 <Route path="/share" element={<Share UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />

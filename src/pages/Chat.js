@@ -13,8 +13,8 @@ function getRandomInt() {
 
 //const db = getFirestore();
 
-export async function fetch_messages() {
-    return await get(child(ref(db), `messages`, orderByChild('createdAt'))).then((snapshot) => {
+export async function fetch_messages(id) {
+    return await get(child(ref(db), `groupchats/${id}/messages`, orderByChild('createdAt'))).then((snapshot) => {
         const postArray = [];
         snapshot.forEach(function(child) {
             postArray.push(child.val());
@@ -36,7 +36,7 @@ function Chat(messages) {
   const dummy = useRef();
   //const messagesRef = collection(db, "messages");
 
-
+  console.log("messages",messages);
 
   const [formValue, setFormValue] = useState('');
 
@@ -46,7 +46,7 @@ function Chat(messages) {
 
     const messageid = getRandomInt();
 
-    await set(ref(db, 'messages/' + messageid), {
+    await set(ref(db, 'groupchats/1234326129709/messages/' + messageid), {
       text: formValue,
       createdAt: Date.now(),
       uid,
