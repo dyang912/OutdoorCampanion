@@ -25,8 +25,9 @@ function App() {
     const [UPhotoUrl, setUPhotoUrl] = useState("");
     const [user] = useUserState({setUEmail, setUName, setUPhotoUrl, setUid});
     const [posts, setPost] = useState();
-    const [messages, setMessages] = useState();
+    const [messages, setMessages] = useState({});
     const [dbgroupchats, setdbgroupchats] = useState();
+    const [id, setid] = useState();
 
 
     useEffect(() => {
@@ -65,8 +66,8 @@ function App() {
                 />} />
 
                 <Route path="/newpost" element={<NewPost user={user} UName={UName} UEmail={UEmail} uid={uid}/>} />
-                <Route path="/chat" element={<Chat messages={messages}/>} />
-                <Route path="/groupchats" element={<Groupchats groupchats={dbgroupchats} setMessages={setMessages}/>} />
+                <Route path="/chat" element={<Chat messages={messages} id={id}/>} />
+                <Route path="/groupchats" element={<Groupchats groupchats={dbgroupchats} setMessages={setMessages} setid={setid}/>} />
 
                 <Route path="/share" element={<Share UName={UName}/>} />
                 <Route path="*" element={<ErrorPage />} />

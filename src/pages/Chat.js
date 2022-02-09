@@ -32,11 +32,12 @@ export async function fetch_messages(id) {
 
 const auth = getAuth();
 
-function Chat(messages) {
+function Chat({messages,id}) {
   const dummy = useRef();
   //const messagesRef = collection(db, "messages");
 
   console.log("messages",messages);
+  console.log("id",id);
 
   const [formValue, setFormValue] = useState('');
 
@@ -46,7 +47,7 @@ function Chat(messages) {
 
     const messageid = getRandomInt();
 
-    await set(ref(db, 'groupchats/1234326129709/messages/' + messageid), {
+    await set(ref(db, `groupchats/${id}/messages/` + messageid), {
       text: formValue,
       createdAt: Date.now(),
       uid,
@@ -65,7 +66,7 @@ function Chat(messages) {
   return (<div>
     <main >
 
-      {messages.messages ? Object.values(messages.messages).map(msg => <ChatMessage key={msg.id} text={msg.text} uid={msg.uid} photoURL={msg.photoURL} />) : null}
+      {messages ? Object.values(messages).map(msg => <ChatMessage key={msg.id} text={msg.text} uid={msg.uid} photoURL={msg.photoURL} />) : null}
 
       <span ref={dummy}></span>
 
