@@ -41,7 +41,7 @@ function Chat({messages,id}) {
   const [formValue, setFormValue] = useState('');
 
   async function sendMessage(event) {
-
+    event.preventDefault();
     const { uid, photoURL } = auth.currentUser;
 
     const messageid = getRandomInt();
@@ -59,6 +59,7 @@ function Chat({messages,id}) {
     });
 
     setFormValue('');
+
     dummy.current.scrollIntoView({ behavior: 'smooth' });
   }
 
