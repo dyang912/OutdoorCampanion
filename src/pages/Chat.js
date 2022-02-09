@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect,useRef, useState} from "react";
 import {firebase, db} from "../database/firebase";
 import { child, get, orderByChild, ref, set } from "firebase/database"
 import { getFirestore, collection, query, orderBy, limit, serverTimestamp, setDoc, doc } from "firebase/firestore";
@@ -6,7 +6,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useParams } from "react-router-dom";
 import './Chat.css';
 
-const [messages, setMessages] = useState({});
+
 
 function getRandomInt() {
     return Math.floor(Math.random() * 1728354123897);
@@ -37,12 +37,16 @@ function Chat() {
   //const messagesRef = collection(db, "messages");
 
   const { id } = useParams();
+  const [messages, setMessages] = useState();
 
-  fetch_messages(id).then(value =>
-    {
-      setMessages(value);
-    }
-  );
+  useEffect(() => {
+
+    fetch_messages(id).then(value =>
+      {
+        setMessages(value);
+      }
+    );
+  }, []);
   console.log("id",id);
   console.log("messages",messages);
 

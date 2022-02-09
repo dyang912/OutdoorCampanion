@@ -48,27 +48,27 @@ export async function findGroupchats() {
 
 
 
-const Groupchat = ({ groupchat,setMessages,setid }) => (
-  <Link to={`/chat/${groupchat.id}`} className= "nav-link" onClick={() => {fetch_messages(groupchat.id).then(value => {setMessages(value);});setid(groupchat.id);}}>
+const Groupchat = ({ groupchat }) => (
+  <Link to={`/chat/${groupchat.id}`} className= "nav-link">
       <div>
-        it worked {groupchat.text}
+        {groupchat.text}
       </div>
   </Link>
 
 );
 
-function GroupchatList( {groupchats,setMessages,setid} ) {
+function GroupchatList( {groupchats} ) {
   return (
         <div>
-          { groupchats ? groupchats.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat } setMessages={setMessages} setid={setid} />)  :null }
+          { groupchats ? groupchats.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat }  />)  :null }
         </div>
     );
 }
 
-function Groupchats({ groupchats, setMessages, setid }){
+function Groupchats({ groupchats }){
   return (
     <div>
-      <GroupchatList groupchats={groupchats} setMessages={setMessages} setid={setid}/>
+      <GroupchatList groupchats={groupchats} />
     </div>
   );
 }
