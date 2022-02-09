@@ -76,12 +76,9 @@ function Chat() {
   }
 
   return (<div>
-    <main >
-
+    <main className={"mainck"}>
       {messages ? Object.values(messages).map(msg => <ChatMessage key={msg.id} text={msg.text} uid={msg.uid} photoURL={msg.photoURL} />) : null}
-
       <span ref={dummy}/>
-
     </main>
 
     <form onSubmit={sendMessage} className="formmessages">
@@ -104,7 +101,7 @@ const ChatMessage = ({text, uid, photoURL }) => {
   return (
     <div className={`message ${messageClass}`}>
       <img src={photoURL} />
-      <p>{text}</p>
+      <p className={"pck"}>{text}</p>
     </div>
   )
 }
