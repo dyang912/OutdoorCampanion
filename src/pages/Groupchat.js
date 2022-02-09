@@ -57,21 +57,21 @@ const Groupchat = ({ groupchat,setMessages }) => (
 
 );
 
-const GroupchatList = ( {groupchats,setMessages} ) => (
+function GroupchatList( {groupchats,setMessages} ) {
+  return (
+        <div>
+          { groupchats ? groupchats.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat } setMessages={setMessages} />)  :null }
+        </div>
+    );
+}
 
-  <div>
-    { groupchats.messages ? groupchats.messages.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat } setMessages={setMessages} />)  :null }
-  </div>
-);
-
-function Groupchats(groupchats,setMessages){
-  console.log(setMessages);
+function Groupchats({ groupchats, setMessages }){
   return (
     <div>
-    <GroupchatList groupchats={groupchats} setMessages={setMessages}/>
+      <GroupchatList groupchats={groupchats} setMessages={setMessages}/>
     </div>
-  )
-};
+  );
+}
 
 
 
