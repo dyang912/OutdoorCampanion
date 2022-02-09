@@ -5,6 +5,7 @@ import { child, get, orderByChild, ref, set, getDatabase, onValue } from "fireba
 import { getFirestore, collection, query, orderBy, limit, serverTimestamp, setDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {Link, useLocation} from "react-router-dom";
+import {Card, Image} from "react-bootstrap";
 
 const auth = getAuth();
 
@@ -60,8 +61,11 @@ const Groupchat = ({ groupchat }) => (
 function GroupchatList( {groupchats} ) {
   return (
         <div>
-          { groupchats ? groupchats.map(groupchat => <Groupchat key={groupchat.id} groupchat={ groupchat }  />)  :null }
+          
+          { groupchats ? groupchats.map(groupchat => <Card className="m-2"><Card.Body> <Groupchat key={groupchat.id} groupchat={ groupchat }  /> </Card.Body> </Card>)  :null }
+          
         </div>
+        
     );
 }
 
