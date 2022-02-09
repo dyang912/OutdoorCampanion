@@ -49,7 +49,7 @@ export async function findGroupchats() {
 
 
 const Groupchat = ({ groupchat,setMessages,setid }) => (
-  <Link to={"/chat"} className= "nav-link" onClick={() => {fetch_messages(groupchat.id).then(value => {setMessages(value);});setid(groupchat.id);}}>
+  <Link to={`/chat/${groupchat.id}`} className= "nav-link" onClick={() => {fetch_messages(groupchat.id).then(value => {setMessages(value);});setid(groupchat.id);}}>
       <div>
         it worked {groupchat.text}
       </div>

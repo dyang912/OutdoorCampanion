@@ -3,9 +3,10 @@ import {firebase, db} from "../database/firebase";
 import { child, get, orderByChild, ref, set } from "firebase/database"
 import { getFirestore, collection, query, orderBy, limit, serverTimestamp, setDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useParams } from "react-router-dom";
 import './Chat.css';
 
-
+const [messages, setMessages] = useState({});
 
 function getRandomInt() {
     return Math.floor(Math.random() * 1728354123897);
@@ -31,17 +32,24 @@ export async function fetch_messages(id) {
 
 const auth = getAuth();
 
-function Chat({messages,id}) {
+function Chat() {
   const dummy = useRef();
   //const messagesRef = collection(db, "messages");
 
-  console.log("messages",messages);
+  const { id } = useParams();
+
+  fetch_messages(id).then(value =>
+    {
+      setMessages(value);
+    }
+  );
   console.log("id",id);
+  console.log("messages",messages);
 
   const [formValue, setFormValue] = useState('');
 
   async function sendMessage(event) {
-    event.preventDefault();
+
     const { uid, photoURL } = auth.currentUser;
 
     const messageid = getRandomInt();

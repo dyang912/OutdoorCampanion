@@ -66,7 +66,7 @@ function App() {
                 />} />
 
                 <Route path="/newpost" element={<NewPost user={user} UName={UName} UEmail={UEmail} uid={uid}/>} />
-                <Route path="/chat" element={<Chat messages={messages} id={id}/>} />
+                <Route path="chat/:id" element={<Chat/>} />
                 <Route path="/groupchats" element={<Groupchats groupchats={dbgroupchats} setMessages={setMessages} setid={setid}/>} />
 
                 <Route path="/share" element={<Share UName={UName}/>} />
