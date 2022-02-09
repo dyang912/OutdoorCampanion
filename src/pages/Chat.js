@@ -29,7 +29,6 @@ export async function fetch_messages(id) {
 }
 
 
-
 const auth = getAuth();
 
 function Chat({messages,id}) {
@@ -41,13 +40,13 @@ function Chat({messages,id}) {
 
   const [formValue, setFormValue] = useState('');
 
-  async function sendMessage(){
+  async function sendMessage(event) {
 
     const { uid, photoURL } = auth.currentUser;
 
     const messageid = getRandomInt();
 
-    await set(ref(db, `groupchats/${id}/messages/` + messageid), {
+    await set(ref(db, "groupchats/"+id+"/messages/" + messageid), {
       text: formValue,
       createdAt: Date.now(),
       uid,
@@ -68,7 +67,7 @@ function Chat({messages,id}) {
 
       {messages ? Object.values(messages).map(msg => <ChatMessage key={msg.id} text={msg.text} uid={msg.uid} photoURL={msg.photoURL} />) : null}
 
-      <span ref={dummy}></span>
+      <span ref={dummy}/>
 
     </main>
 
