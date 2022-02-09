@@ -47,8 +47,6 @@ function Chat() {
       }
     );
   }, []);
-  console.log("id",id);
-  console.log("messages",messages);
 
   const [formValue, setFormValue] = useState('');
 
@@ -93,9 +91,6 @@ function Chat() {
 
 
 const ChatMessage = ({text, uid, photoURL }) => {
-
-
-
   const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
 
   return (

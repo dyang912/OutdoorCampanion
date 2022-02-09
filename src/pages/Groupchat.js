@@ -16,7 +16,6 @@ async function findText(id){
     console.log({ id:snap.val().postKey, text:snap.val().text});
     object = { id:snap.val().postKey, text:snap.val().text};
   })
-  console.log("mark",object);
   return (object);
 }
 
@@ -36,9 +35,7 @@ export async function findGroupchats() {
         })
 
     });
-    console.log("groupchats",groupchats)
     groupchats.forEach(id => {
-        console.log("id",id);
         findText(id).then((value) => groupchattexts.push(value));
     });
     console.log("groupchattexts",groupchattexts);

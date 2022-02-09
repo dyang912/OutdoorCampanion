@@ -27,8 +27,6 @@ function App() {
     const [posts, setPost] = useState();
     const [dbgroupchats, setdbgroupchats] = useState();
 
-
-
     useEffect(() => {
         const db = ref(getDatabase(firebase), "/posts");
         onValue(db, () => {

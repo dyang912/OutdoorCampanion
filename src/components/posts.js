@@ -81,13 +81,9 @@ const Post = ({ post, UName, UEmail, uid }) => {
                 {categoryfn()}
                 <Card.Title>{ post.text }</Card.Title>
                 { post.image ?
-                     isMobile ?(
-                         <div style={{width: 100+'%', height: 100+'%'}}>
-                        <Image src={post.image} alt="postImage" fluid={true} style={{width: 80+'%'}}/>
-                         </div>):
-                         (<div style={{width: 100+'%', height: 100+'%'}}>
-                        <Image src={post.image} alt="postImage" fluid={true} style={{width: 50+'%'}}/>
-                         </div>)
+                    (isMobile ?
+                         <Image src={post.image} alt="postImage" fluid={true} style={{width: "100%"}}/> :
+                         <Image src={post.image} alt="postImage" fluid={true} style={{width: "30%"}}/>)
                     : null
                 }
                 { post.heldTime ? <Card.Text>{"Time: " + post.heldTime}</Card.Text> : null }
@@ -101,20 +97,21 @@ const Post = ({ post, UName, UEmail, uid }) => {
                         {!post.comments ? 0 : Object.keys(post.comments).length} comment(s)
                     </button>
                 }
-                { liked?
+                { uid ? liked?
                     <button type="button" className="bi bi-heart-fill" onClick={() => {setLiked(false); unlike_post(post.postKey, UEmail)}}>
                         {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
                     </button> :
                     <button type="button" className="bi bi-heart" onClick={() => {setLiked(true); like_post(post.postKey,UEmail)}}>
                         {!post.likes ? 0 : Object.keys(post.likes).length} like(s)
-                    </button>
+                    </button> : null
                 }
                 { UEmail===post.creatorEmail ?
                     <button type="button" className="btn btn-outline-dark" onClick={() => delete_post(post.postKey)}>
                         delete
-                    </button> : null
+                    </button> :
+                    (uid ? <button type="button" className="btn btn-secondary" onClick={() => joinEvent()}>Join</button>:null)
                 }
-                { uid ?<button type="button" className="btn btn-secondary" onClick={() => joinEvent()}>Join</button>:null}
+
             </Card.Body>
             { selected ? <Comments postKey={post.postKey} UName = {UName}/>: null}
         </Card>

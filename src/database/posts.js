@@ -119,6 +119,10 @@ export async function fetch_posts() {
 }
 
 export async function delete_post(postkey){
+    remove(ref(db, 'groupchats/' + postkey), {
+    }).catch((error) => {
+        console.log(error);
+    });
     remove(ref(db, 'posts/' + postkey)).then(() => {
         alert("delete success!")
     }).catch((error) => {
