@@ -33,20 +33,14 @@ function App() {
             fetch_posts().then(value => {
                 setPost(value);
             })
-
         })
 
         const groupchatsdb = ref(getDatabase(firebase), "/groupchats");
         onValue(groupchatsdb, () => {
             findGroupchats().then(value => {
-                console.log(value);
                 setdbgroupchats(value);
-              //  console.log(dbgroupchats);
-
             })
-
         })
-
     }, []);
 
     return (
